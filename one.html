@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LEGO® Creator #2512 - Manual Interativo: Árvore de Cortiça 360°</title>
+<style>
+  :root {
+    --lego-sky: #9ad1e3;
+    --lego-sky-light: #cdeaf3;
+    --lego-grass: #b8dc7c;
+    --lego-yellow-box: #f6f2a6;
+    --lego-pink-box: #f3c4d6;
+    --lego-red: #e3000b;
+    --lego-yellow: #ffd500;
+    --cork-base: #c89664;
+    --cork-dark: #8c5830;
+    --cork-light: #dfb384;
+    --wood-bark: #4e2f18;
+    --wood-ring: #d69f66;
+    --ink: #1a1a1a;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  body {
+    background: #1e242b;
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px;
+  }
+
+  /* TOP BAR LEGO HEADER */
+  .app-header {
+    width: 100%;
+    max-width: 1280px;
+    background: linear-gradient(90deg, #b80009 0%, #e3000b 50%, #b80009 100%);
+    color: white;
+    border-radius: 14px 14px 0 0;
+    padding: 14px 22px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.45);
+    border-bottom: 4px solid var(--lego-yellow);
+  }
+
+  .brand-box {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .lego-badge {
+    background: var(--lego-red);
+    border: 3px solid white;
+    outline: 2px solid black;
+    padding: 6px 10px;
+    font-weight: 900;
+    font-size: 1.35rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 6px;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.4);
+    text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+  }
+
+  .header-title h1 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+  }
+
+  .header-title p {
+    font-size: 0.85rem;
+    opacity: 0.92;
+  }
+
+  /* PROGRESS & CONTROLS */
+  .header-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .stat-pill {
+    background: rgba(0,0,0,0.28);
+    border: 1px solid rgba(255,255,255,0.35);
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .stat-pill span.val {
+    color: var(--lego-yellow);
+    font-size: 1rem;
+  }
+
+  .toggle-btn {
+    background: #fff;
+    color: #111;
+    border: 2px solid #000;
+    padding: 7px 13px;
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 0.82rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s ease;
+    box-shadow: 0 3px 0 #000;
+  }
+
+  .toggle-btn:hover {
+    transform: translateY(-1px);
+    background: #fff9c4;
+  }
+
+  .toggle-btn.active {
+    background: var(--lego-yellow);
+    color: #000;
+  }
+
+  /* MAIN WORKSPACE */
+  .workspace {
+    width: 100%;
+    max-width: 1280px;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    background: #f5f5f0;
+    border-radius: 0 0 14px 14px;
+    overflow: hidden;
+    box-shadow: 0 14px 36px rgba(0,0,0,0.55);
+    border: 3px solid #111;
+    border-top: none;
+  }
+
+  @media (max-width: 980px) {
+    .workspace {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* LEFT COLUMN: CLASSIC LEGO MANUAL PAGE */
+  .lego-page {
+    background: linear-gradient(
+      172deg,
+      var(--lego-sky) 0%,
+      var(--lego-sky) 56%,
+      var(--lego-sky-light) 64%,
+      var(--lego-grass) 71%,
+      #9ec95c 100%
+    );
+    padding: 18px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 3px solid #1a1a1a;
+    min-height: 690px;
+  }
+
+  .page-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .view-tabs {
+    display: flex;
+    gap: 6px;
+  }
+
+  .tab-btn {
+    background: rgba(255,255,255,0.75);
+    border: 2px solid #1a1a1a;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: 800;
+    font-size: 0.8rem;
+    cursor: pointer;
+    box-shadow: 0 2px 0 #1a1a1a;
+  }
+
+  .tab-btn.active {
+    background: var(--lego-yellow);
+  }
+
+  /* STEP STAGE CARD (SINGLE OR BOOKLET) */
+  .manual-canvas-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
+
+  /* CALLOUT BOXES (Exact match to LEGO image_2.png) */
+  .lego-callout-row {
+    display: flex;
+    align-items: stretch;
+    gap: 14px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+
+  .yellow-subbox {
+    background: var(--lego-yellow-box);
+    border: 2px solid #1a1a1a;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.18);
+    position: relative;
+    flex: 1;
+    min-width: 260px;
+  }
+
+  .pink-parts-box {
+    background: var(--lego-pink-box);
+    border: 2px solid #1a1a1a;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 135px;
+    justify-content: center;
+  }
+
+  .part-multiplier {
+    font-size: 1.35rem;
+    font-weight: 900;
+    color: #111;
+  }
+
+  .step-number-giant {
+    font-size: 2.7rem;
+    font-weight: 900;
+    color: #111;
+    line-height: 1;
+    min-width: 54px;
+  }
+
+  /* DUAL VIEW STAGE (TOP PLAN + FRONT ELEVATION) */
+  .interactive-stage {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    align-items: stretch;
+  }
+
+  @media (max-width: 640px) {
+    .interactive-stage {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .diagram-card {
+    background: rgba(255, 255, 255, 0.86);
+    border: 2px solid #1a1a1a;
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.16);
+    position: relative;
+  }
+
+  .diagram-card-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #222;
+    border-bottom: 1.5px solid rgba(0,0,0,0.15);
+    padding-bottom: 5px;
+    margin-bottom: 6px;
+  }
+
+  .badge-tag {
+    background: #1a1a1a;
+    color: #fff;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+  }
+
+  .svg-container {
+    width: 100%;
+    height: 320px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .svg-container svg {
+    width: 100%;
+    height: 100%;
+    max-height: 310px;
+    overflow: visible;
+  }
+
+  /* BOOKLET 2-COLUMN MODE (LIKE IMAGE_2.PNG) */
+  .booklet-grid {
+    display: none;
+    grid-template-columns: 1fr 1fr;
+    border: 2px solid #1a1a1a;
+    background: linear-gradient(
+      175deg,
+      var(--lego-sky) 0%,
+      var(--lego-sky) 58%,
+      var(--lego-sky-light) 65%,
+      var(--lego-grass) 73%,
+      #9ec95c 100%
+    );
+    min-height: 520px;
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.2);
+  }
+
+  .booklet-grid.active {
+    display: grid;
+  }
+
+  .interactive-stage-wrap.hidden {
+    display: none;
+  }
+
+  .booklet-col {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .booklet-col:first-child {
+    border-right: 2.5px solid #1a1a1a;
+  }
+
+  .booklet-cell {
+    background: rgba(255,255,255,0.45);
+    border: 2px solid transparent;
+    border-radius: 6px;
+    padding: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.15s ease;
+  }
+
+  .booklet-cell:hover {
+    background: rgba(255,255,255,0.8);
+    border-color: #1a1a1a;
+  }
+
+  .booklet-cell.current {
+    background: rgba(255,255,255,0.95);
+    border: 2.5px solid var(--lego-red);
+    box-shadow: 3px 3px 0 #1a1a1a;
+  }
+
+  .booklet-num {
+    font-size: 1.5rem;
+    font-weight: 900;
+    min-width: 32px;
+  }
+
+  /* NAVIGATION FOOTER */
+  .step-nav-bar {
+    margin-top: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.9);
+    border: 2px solid #1a1a1a;
+    padding: 10px 14px;
+    border-radius: 8px;
+    box-shadow: 0 3px 0 #1a1a1a;
+  }
+
+  .nav-btn {
+    background: var(--lego-red);
+    color: white;
+    border: 2px solid #111;
+    padding: 9px 18px;
+    border-radius: 6px;
+    font-weight: 900;
+    font-size: 0.9rem;
+    cursor: pointer;
+    box-shadow: 0 3px 0 #111;
+    transition: transform 0.1s;
+  }
+
+  .nav-btn:disabled {
+    background: #aaa;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .nav-btn:not(:disabled):active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 #111;
+  }
+
+  .step-dots {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .step-dot {
+    width: 26px;
+    height: 26px;
+    border-radius: 5px;
+    border: 2px solid #111;
+    background: #fff;
+    font-weight: 800;
+    font-size: 0.75rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .step-dot.done {
+    background: #8bc34a;
+    color: #000;
+  }
+
+  .step-dot.active {
+    background: var(--lego-yellow);
+    transform: scale(1.12);
+    box-shadow: 0 2px 0 #000;
+  }
+
+  /* RIGHT COLUMN: BUILDER ASSISTANT & CHECKLIST */
+  .builder-panel {
+    padding: 18px;
+    background: #fdfdfd;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .instruction-card {
+    background: #fffef7;
+    border: 2px solid #1a1a1a;
+    border-radius: 8px;
+    padding: 14px;
+    box-shadow: 4px 4px 0 #e2dec5;
+  }
+
+  .instruction-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #1a1a1a;
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+  }
+
+  .instruction-header h2 {
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: #111;
+  }
+
+  .level-tag {
+    background: var(--lego-yellow);
+    border: 1.5px solid #111;
+    padding: 3px 9px;
+    border-radius: 4px;
+    font-weight: 900;
+    font-size: 0.78rem;
+  }
+
+  .substeps-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .substeps-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    background: #f4f3ea;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border-left: 4px solid var(--lego-red);
+  }
+
+  .substep-num {
+    background: #111;
+    color: #fff;
+    font-weight: 900;
+    font-size: 0.74rem;
+    min-width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+
+  .pro-tip-box {
+    background: var(--lego-yellow-box);
+    border: 2px solid #1a1a1a;
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 0.84rem;
+    line-height: 1.38;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .legend-box {
+    background: #f0f4f7;
+    border: 2px solid #1a1a1a;
+    border-radius: 8px;
+    padding: 11px 13px;
+    font-size: 0.8rem;
+  }
+
+  .legend-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 7px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+  }
+
+  .check-step-btn {
+    width: 100%;
+    background: #2e7d32;
+    color: white;
+    border: 2px solid #111;
+    padding: 11px;
+    border-radius: 8px;
+    font-weight: 900;
+    font-size: 0.95rem;
+    cursor: pointer;
+    box-shadow: 0 3px 0 #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .check-step-btn.completed {
+    background: #66bb6a;
+    color: #000;
+  }
+
+  /* GLUE PULSE ANIMATION */
+  @keyframes pulseGlue {
+    0% { r: 4.5px; opacity: 1; }
+    50% { r: 7.5px; opacity: 0.65; }
+    100% { r: 4.5px; opacity: 1; }
+  }
+  .glue-dot {
+    fill: #ff1744;
+    stroke: #ffffff;
+    stroke-width: 1.5px;
+    animation: pulseGlue 1.2s infinite ease-in-out;
+  }
+
+  @keyframes glowLed {
+    0%, 100% { filter: drop-shadow(0 0 4px #ffd54f) drop-shadow(0 0 8px #ffab00); }
+    50% { filter: drop-shadow(0 0 7px #fff59d) drop-shadow(0 0 13px #ff8f00); }
+  }
+  .led-bulb-on {
+    animation: glowLed 1.5s infinite ease-in-out;
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP LEGO BAR -->
+<header class="app-header">
+  <div class="brand-box">
+    <div class="lego-badge">LEGO</div>
+    <div class="header-title">
+      <h1>SET #2512 • Árvore de Natal de Cortiça 360° (Interior Oco)</h1>
+      <p>Manual de Montagem Interativo Passo a Passo • Zero Cortes • Fiel à Foto Original</p>
+    </div>
+  </div>
+
+  <div class="header-controls">
+    <div class="stat-pill">
+      🍾 Rolhas Usadas: <span class="val" id="corkCounter">0 / 39</span>
+    </div>
+    <button class="toggle-btn active" id="btnToggleGlue" onclick="toggleGlue()">
+      🔥 Pontos de Cola: ON
+    </button>
+    <button class="toggle-btn" id="btnToggleGhost" onclick="toggleGhost()">
+      👁️ Sombra Andar Anterior: ON
+    </button>
+    <button class="toggle-btn" id="btnToggleLights" onclick="toggleLights()">
+      ✨ Testar Luzes LED
+    </button>
+  </div>
+</header>
+
+<!-- WORKSPACE -->
+<main class="workspace">
+  <!-- ESQUERDA: PÁGINA DO MANUAL ESTILO LEGO -->
+  <section class="lego-page">
+    <div class="page-top-bar">
+      <div class="view-tabs">
+        <button class="tab-btn active" id="tabInteractive" onclick="setMode('interactive')">
+          🔍 Modo Construtor (Planta 360° + Frente)
+        </button>
+        <button class="tab-btn" id="tabBooklet" onclick="setMode('booklet')">
+          📖 Folha Dupla LEGO® (Tipo Livro)
+        </button>
+      </div>
+      <div style="font-size:0.8rem; font-weight:800; background:rgba(255,255,255,0.75); padding:4px 9px; border-radius:5px; border:1.5px solid #111;">
+        Página <span id="pageIndicator">1 / 12</span>
+      </div>
+    </div>
+
+    <!-- MODO 1: CONSTRUTOR INTERATIVO DETALHADO -->
+    <div class="manual-canvas-wrap" id="interactiveWrap">
+      <!-- CAIXA AMARELA E ROSA ESTILO LEGO (IGUAL À IMAGEM 2) -->
+      <div class="lego-callout-row">
+        <div class="step-number-giant" id="stepBigNumber">1</div>
+        <div class="yellow-subbox">
+          <div class="pink-parts-box" id="partsBoxSvgWrap">
+            <!-- Renderizado via JS -->
+          </div>
+          <div style="flex:1;">
+            <div style="font-weight:900; font-size:0.9rem; margin-bottom:3px;" id="calloutTitle">
+              Sub-montagem do Andar
+            </div>
+            <div style="font-size:0.8rem; color:#222;" id="calloutFormula">
+              Posiciona as peças conforme as setas de orientação.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DUPLO DIAGRAMA: PLANTA 360° + ELEVAÇÃO FRONTAL -->
+      <div class="interactive-stage">
+        <!-- DIAGRAMA 1: VISTA DE TOPO (PLANTA 360) -->
+        <div class="diagram-card">
+          <div class="diagram-card-header">
+            <span>📐 1. Planta de Topo (360° Oco)</span>
+            <span class="badge-tag" id="topBadge">Nível Base</span>
+          </div>
+          <div class="svg-container" id="topViewSvgContainer"></div>
+          <div style="font-size:0.74rem; font-weight:700; color:#333; text-align:center; margin-top:4px;">
+            ⬇️ <strong>FRENTE DA ÁRVORE</strong> (O que vês na fotografia) ⬇️
+          </div>
+        </div>
+
+        <!-- DIAGRAMA 2: VISTA DE FRENTE ACUMULADA (FIEL À FOTO) -->
+        <div class="diagram-card">
+          <div class="diagram-card-header">
+            <span>🎄 2. Vista Frontal (Igual à Foto)</span>
+            <span class="badge-tag" id="frontBadge">Acumulado</span>
+          </div>
+          <div class="svg-container" id="frontViewSvgContainer"></div>
+          <div style="font-size:0.74rem; font-weight:700; color:#333; text-align:center; margin-top:4px;">
+            As rolhas a cores vivas são as deste passo; as suaves já estão coladas.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODO 2: FOLHA DUPLA ESTILO LIVRO LEGO (2 COLUNAS) -->
+    <div class="booklet-grid" id="bookletWrap">
+      <div class="booklet-col" id="bookletColLeft"></div>
+      <div class="booklet-col" id="bookletColRight"></div>
+    </div>
+
+    <!-- BARRA DE NAVEGAÇÃO -->
+    <div class="step-nav-bar">
+      <button class="nav-btn" id="btnPrev" onclick="changeStep(-1)">◀ Anterior</button>
+      <div class="step-dots" id="stepDotsContainer"></div>
+      <button class="nav-btn" id="btnNext" onclick="changeStep(1)">Seguinte ▶</button>
+    </div>
+  </section>
+
+  <!-- DIREITA: GUIA DE ACOMPANHAMENTO E CHECKLIST -->
+  <aside class="builder-panel">
+    <div class="instruction-card">
+      <div class="instruction-header">
+        <h2 id="panelStepTitle">Passo 1: Base e Pilhas</h2>
+        <span class="level-tag" id="panelLevelTag">Fundação</span>
+      </div>
+
+      <p style="font-size:0.86rem; color:#333; margin-bottom:10px; font-weight:600;" id="panelVisualMatch">
+        🔍 Na foto original: Bolacha de madeira com casca rústica na base.
+      </p>
+
+      <ul class="substeps-list" id="panelSubsteps"></ul>
+    </div>
+
+    <div class="pro-tip-box">
+      <span style="font-size:1.3rem;">💡</span>
+      <div>
+        <strong>Segredo de Montagem LEGO®:</strong>
+        <p id="panelProTip">Pousa a caixa de pilhas no centro sem a colar à madeira para poderes trocar as pilhas no futuro.</p>
+      </div>
+    </div>
+
+    <button class="check-step-btn" id="btnCompleteStep" onclick="markStepDone()">
+      ✅ Marcar este Passo como Colado e Avançar
+    </button>
+
+    <div class="legend-box">
+      <strong>🧭 Legenda Rápida de Peças & Orientação:</strong>
+      <div class="legend-grid">
+        <div class="legend-item">
+          <svg width="34" height="16"><rect x="1" y="2" width="32" height="12" rx="2" fill="#c89664" stroke="#111" stroke-width="1.5"/></svg>
+          <span>Rolha de Lado <code>[===]</code></span>
+        </div>
+        <div class="legend-item">
+          <svg width="20" height="20"><circle cx="10" cy="10" r="8" fill="#dfb384" stroke="#111" stroke-width="1.5"/><circle cx="10" cy="10" r="5" fill="none" stroke="#8c5830" stroke-dasharray="2,2"/></svg>
+          <span>Rolha de Topo <code>(O)</code></span>
+        </div>
+        <div class="legend-item">
+          <svg width="18" height="18"><circle cx="9" cy="9" r="5" fill="#ff1744" stroke="#fff" stroke-width="1.5"/></svg>
+          <span>Gota de Cola Quente</span>
+        </div>
+        <div class="legend-item">
+          <svg width="24" height="16"><rect x="2" y="2" width="20" height="12" fill="none" stroke="#444" stroke-dasharray="3,2" stroke-width="1.5"/></svg>
+          <span>Andar de Baixo (Recuo)</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<script>
+  // DADOS COMPLETOS DOS 12 PASSOS (360° OCO, SEM CORTES, FIEL À FOTO)
+  // Orientação na Planta de Topo:
+  // type: 'side' (comprida 44x24mm) ou 'end' (apontada para fora / vista como círculo na frente ou radial no topo) ou 'stand' (vertical em pé)
+  const STEPS = [
+    {
+      step: 1,
+      title: "Passo 1: Base de Madeira e Caixa de Pilhas",
+      levelLabel: "Preparação",
+      corksUsed: 0,
+      cumulativeCorks: 0,
+      calloutTitle: "Fundação + Power Functions (LED)",
+      calloutFormula: "1x Bolacha de Madeira (Ø 16–18 cm) + Caixa de Pilhas no centro",
+      visualMatch: "🔍 Na foto original: A base de madeira com casca serve de prato estável para toda a pirâmide.",
+      substeps: [
+        "Coloca a bolacha de madeira centrada à tua frente.",
+        "Testa o fio de luzes LED e pousa a caixa de pilhas bem no centro da madeira (NÃO a coles à madeira!).",
+        "Estica o fio de cobre para sair para trás (às 12 horas na planta), onde ficará escondido entre duas rolhas."
+      ],
+      proTip: "Ao deixares a caixa de pilhas solta dentro da chaminé oca, basta levantares a árvore (que fica colada num bloco único) sempre que quiseres ligar ou desligar o interruptor!",
+      topParts: [],
+      gluePoints: []
+    },
+    {
+      step: 2,
+      title: "Passo 2: Nível 1 (Anel da Base Oca)",
+      levelLabel: "1.º Andar",
+      corksUsed: 8,
+      cumulativeCorks: 8,
+      calloutTitle: "4x Rolhas de Lado + 4x Rolhas nos Cantos",
+      calloutFormula: "Frente igual à foto: (O) à esq. + [=======] ao centro + (O) à dir.",
+      visualMatch: "🔍 Na foto (1.º andar): Vemos 1 rolha comprida deitada ao centro e 2 rolhas viradas de topo (círculo) nas pontas.",
+      substeps: [
+        "FRENTE (6h): Cola 1 rolha comprida de lado [=======] a 1 cm da borda da madeira.",
+        "CANTOS DA FRENTE (4h e 8h): Cola 2 rolhas apontadas para a frente (O), uma à esquerda e outra à direita da central.",
+        "LADOS E TRÁS: Completa o anel 360° em volta da caixa de pilhas com mais 3 rolhas compridas e 2 nos cantos traseiros."
+      ],
+      proTip: "Deixa uma fresta de 2 mm entre as rolhas de trás para o fio de arame de cobre sair sem ser esmagado!",
+      // Coordenadas na planta (centro 150,150, raio ~82)
+      topParts: [
+        { x: 150, y: 232, angle: 0, viewType: 'side', label: 'Frente' },     // Frente comprida
+        { x: 92,  y: 212, angle: -25, viewType: 'end', label: 'Esq' },       // Canto Frente-Esq (Topo)
+        { x: 208, y: 212, angle: 25, viewType: 'end', label: 'Dir' },        // Canto Frente-Dir (Topo)
+        { x: 68,  y: 150, angle: 90, viewType: 'side' },                     // Lado Esq
+        { x: 232, y: 150, angle: 90, viewType: 'side' },                     // Lado Dir
+        { x: 92,  y: 88,  angle: 25, viewType: 'end' },                      // Canto Trás-Esq
+        { x: 208, y: 88,  angle: -25, viewType: 'end' },                     // Canto Trás-Dir
+        { x: 150, y: 68,  angle: 0, viewType: 'side' }                       // Trás
+      ],
+      gluePoints: [
+        {x: 135, y: 232}, {x: 165, y: 232}, {x: 92, y: 212}, {x: 208, y: 212},
+        {x: 68, y: 138}, {x: 68, y: 162}, {x: 232, y: 138}, {x: 232, y: 162},
+        {x: 92, y: 88}, {x: 208, y: 88}, {x: 135, y: 68}, {x: 165, y: 68}
+      ]
+    },
+    {
+      step: 3,
+      title: "Passo 3: Nível 2 (Recuo de 5 mm)",
+      levelLabel: "2.º Andar",
+      corksUsed: 7,
+      cumulativeCorks: 15,
+      calloutTitle: "Anel de 7 Rolhas sobre as Juntas",
+      calloutFormula: "Frente: (O) à esq. + [=======] centro + (O) à dir. (recuado 5 mm)",
+      visualMatch: "🔍 Na foto (2.º andar): Repete o ritmo (O) [=======] (O), mas mais estreito e assente sobre as uniões do 1.º andar.",
+      substeps: [
+        "Aplica gotas de cola quente no topo das rolhas do Nível 1, mas 5 mm mais perto do centro.",
+        "FRENTE: Cola 1 rolha comprida [=======] ao centro, ladeada por 1 rolha de topo (O) à esquerda e 1 (O) à direita.",
+        "TRÁS: Fecha a roda com mais 4 rolhas em redor da chaminé oca."
+      ],
+      proTip: "Colar cada rolha a fazer 'ponte' sobre duas rolhas de baixo (como tijolos de LEGO) torna a árvore 3x mais resistente!",
+      topParts: [
+        { x: 152, y: 218, angle: 0, viewType: 'side' },
+        { x: 98,  y: 200, angle: -20, viewType: 'end' },
+        { x: 204, y: 200, angle: 20, viewType: 'end' },
+        { x: 78,  y: 146, angle: 82, viewType: 'side' },
+        { x: 222, y: 146, angle: -82, viewType: 'side' },
+        { x: 118, y: 85,  angle: 15, viewType: 'end' },
+        { x: 182, y: 85,  angle: -15, viewType: 'end' }
+      ],
+      gluePoints: [
+        {x: 138, y: 218}, {x: 166, y: 218}, {x: 98, y: 200}, {x: 204, y: 200},
+        {x: 78, y: 146}, {x: 222, y: 146}, {x: 118, y: 85}, {x: 182, y: 85}
+      ]
+    },
+    {
+      step: 4,
+      title: "Passo 4: Nível 3 (Dupla Frontal Comprida)",
+      levelLabel: "3.º Andar",
+      corksUsed: 6,
+      cumulativeCorks: 21,
+      calloutTitle: "Anel Hexagonal de 6 Rolhas",
+      calloutFormula: "Frente: 2x [=======] lado a lado + 2x (O) nas laterais",
+      visualMatch: "🔍 Na foto (3.º andar): Mudança chave! Na frente deixam de aparecer círculos nas pontas e vemos 2 rolhas compridas lado a lado.",
+      substeps: [
+        "FRENTE: Cola 2 rolhas compridas [=======] [=======] ponta com ponta na frente, formando um ligeiro ângulo.",
+        "LADOS (3h e 9h): Cola 1 rolha de topo (O) na esquerda e 1 (O) na direita.",
+        "TRÁS: Fecha o anel com mais 2 rolhas compridas atrás. A caixa de pilhas já ficou totalmente escondida lá em baixo!"
+      ],
+      proTip: "Alinha bem o encontro central das duas rolhas da frente — é esse risco vertical a meio que dá o charme autêntico da foto!",
+      topParts: [
+        { x: 122, y: 204, angle: 12, viewType: 'side' },
+        { x: 178, y: 204, angle: -12, viewType: 'side' },
+        { x: 84,  y: 150, angle: 90, viewType: 'end' },
+        { x: 216, y: 150, angle: 90, viewType: 'end' },
+        { x: 122, y: 96,  angle: -12, viewType: 'side' },
+        { x: 178, y: 96,  angle: 12, viewType: 'side' }
+      ],
+      gluePoints: [
+        {x: 115, y: 204}, {x: 142, y: 206}, {x: 158, y: 206}, {x: 185, y: 204},
+        {x: 84, y: 150}, {x: 216, y: 150}, {x: 122, y: 96}, {x: 178, y: 96}
+      ]
+    },
+    {
+      step: 5,
+      title: "Passo 5: Nível 4 (Segundas Duplas Compridas)",
+      levelLabel: "4.º Andar",
+      corksUsed: 5,
+      cumulativeCorks: 26,
+      calloutTitle: "Pentágono de 5 Rolhas (Fecho do Oco)",
+      calloutFormula: "Frente: 2x [=======] mais chegadas ao centro + 2x (O) + 1x Trás",
+      visualMatch: "🔍 Na foto (4.º andar): Outra dupla de rolhas compridas [=======] [=======] na frente, mais recuadas que o 3.º andar.",
+      substeps: [
+        "FRENTE: Cola mais 2 rolhas compridas [=======] lado a lado, recuadas 5 mm em relação ao Nível 3.",
+        "LADOS E TRÁS: Cola 2 rolhas laterais e 1 rolha comprida atrás para fechar o pentágono.",
+        "Repara como o espaço oco central ficou agora reduzido a um pequeno triângulo."
+      ],
+      proTip: "Não tenhas pressa: olha para a árvore de frente e de lado antes de a cola arrefecer para garantir que o cone está simétrico.",
+      topParts: [
+        { x: 125, y: 190, angle: 16, viewType: 'side' },
+        { x: 175, y: 190, angle: -16, viewType: 'side' },
+        { x: 96,  y: 138, angle: 75, viewType: 'end' },
+        { x: 204, y: 138, angle: -75, viewType: 'end' },
+        { x: 150, y: 104, angle: 0, viewType: 'side' }
+      ],
+      gluePoints: [
+        {x: 125, y: 190}, {x: 175, y: 190}, {x: 96, y: 138}, {x: 204, y: 138}, {x: 150, y: 104}
+      ]
+    },
+    {
+      step: 6,
+      title: "Passo 6: Nível 5 (Moinho de 4 Rolhas)",
+      levelLabel: "5.º Andar",
+      corksUsed: 4,
+      cumulativeCorks: 30,
+      calloutTitle: "Quadrado em Moinho (4 Rolhas)",
+      calloutFormula: "Frente: 1x Topo (O) à esquerda + 1x Comprida [=======] à direita",
+      visualMatch: "🔍 Na foto (5.º andar): Vemos claramente a rodinha (O) do lado esquerdo e uma rolha comprida [=======] ao centro-direita!",
+      substeps: [
+        "FRENTE-ESQUERDA: Cola 1 rolha com a face redonda (O) virada para ti no lado esquerdo.",
+        "FRENTE-DIREITA: Encosta 1 rolha comprida [=======] ao lado direito dela.",
+        "TRÁS: Faz exatamente o mesmo com as outras 2 rolhas na parte de trás. O interior oco fica agora tapado!"
+      ],
+      proTip: "Esta disposição em 'moinho de vento' fecha o topo da cavidade oca sem precisar de nenhuma rolha extra lá dentro!",
+      topParts: [
+        { x: 112, y: 174, angle: 0, viewType: 'end' },
+        { x: 164, y: 176, angle: -8, viewType: 'side' },
+        { x: 188, y: 126, angle: 0, viewType: 'end' },
+        { x: 136, y: 124, angle: -8, viewType: 'side' }
+      ],
+      gluePoints: [
+        {x: 112, y: 174}, {x: 152, y: 176}, {x: 176, y: 176}, {x: 188, y: 126}, {x: 136, y: 124}
+      ]
+    },
+    {
+      step: 7,
+      title: "Passo 7: Nível 6 (Inversão: Comprida + Topo)",
+      levelLabel: "6.º Andar",
+      corksUsed: 3,
+      cumulativeCorks: 33,
+      calloutTitle: "Triângulo de 3 Rolhas",
+      calloutFormula: "Frente: 1x Comprida [=======] à esq./centro + 1x Topo (O) à direita",
+      visualMatch: "🔍 Na foto (6.º andar): Ao contrário do 5.º andar, agora a rolha comprida está à esquerda/centro e a rodinha (O) está na direita!",
+      substeps: [
+        "FRENTE-ESQUERDA/CENTRO: Cola 1 rolha comprida [=======] bem visível de frente.",
+        "FRENTE-DIREITA: Ao lado direito dela, cola 1 rolha virada de topo (O).",
+        "TRÁS: Cola a 3.ª rolha centrada atrás para dar suporte 360°."
+      ],
+      proTip: "Olha para a foto original: os níveis 6 e 7 têm ambos a rodinha (O) do lado direito! É este detalhe que torna a tua réplica 100% fiel.",
+      topParts: [
+        { x: 136, y: 168, angle: 5, viewType: 'side' },
+        { x: 182, y: 162, angle: 20, viewType: 'end' },
+        { x: 150, y: 132, angle: 0, viewType: 'side' }
+      ],
+      gluePoints: [
+        {x: 125, y: 168}, {x: 150, y: 168}, {x: 182, y: 162}, {x: 150, y: 132}
+      ]
+    },
+    {
+      step: 8,
+      title: "Passo 8: Nível 7 (Triângulo Compacto)",
+      levelLabel: "7.º Andar",
+      corksUsed: 3,
+      cumulativeCorks: 36,
+      calloutTitle: "Triângulo Superior (3 Rolhas)",
+      calloutFormula: "Frente: 1x Comprida [=======] ao centro + 1x Topo (O) recuado à dir.",
+      visualMatch: "🔍 Na foto (7.º andar): Uma rolha comprida iluminada na frente e o topo redondo de outra rolha a espreitar à direita.",
+      substeps: [
+        "Une 3 rolhas bem juntas no centro do Nível 6.",
+        "Mantém 1 rolha comprida [=======] à frente e 1 rolha de topo (O) ligeiramente recuada na direita.",
+        "Cola a 3.ª rolha atrás para criar a plataforma onde vai assentar o topo."
+      ],
+      proTip: "Aperta as 3 rolhas umas contra as outras durante 10 segundos para que não fiquem folgas entre elas.",
+      topParts: [
+        { x: 140, y: 162, angle: 4, viewType: 'side' },
+        { x: 176, y: 154, angle: 28, viewType: 'end' },
+        { x: 148, y: 136, angle: -6, viewType: 'side' }
+      ],
+      gluePoints: [
+        {x: 140, y: 162}, {x: 176, y: 154}, {x: 148, y: 136}
+      ]
+    },
+    {
+      step: 9,
+      title: "Passo 9: Nível 8 (Dupla Paralela do Pescoço)",
+      levelLabel: "8.º Andar",
+      corksUsed: 2,
+      cumulativeCorks: 38,
+      calloutTitle: "2x Rolhas Horizontais Paralelas",
+      calloutFormula: "1x Rolha na Frente [=======] + 1x Rolha Atrás [=======]",
+      visualMatch: "🔍 Na foto (8.º andar): Vemos apenas 1 rolha inteira na horizontal, ligeiramente inclinada de forma orgânica.",
+      substeps: [
+        "Escolhe 2 rolhas normais (se tiveres uma ligeiramente mais curta, de 4 cm, usa-a na frente).",
+        "Cola 1 rolha horizontal [=======] na frente e a outra paralela atrás dela.",
+        "Deixa um pequeno vale de 3 a 4 mm entre as duas para a rolha do Nível 9 encaixar como uma sela!"
+      ],
+      proTip: "Na foto original, esta rolha do 8.º andar tem uma ligeira inclinação natural — não te preocupes se não ficar 100% nivelada a régua, dá-lhe o ar artesanal!",
+      topParts: [
+        { x: 150, y: 158, angle: -4, viewType: 'side' },
+        { x: 150, y: 138, angle: 0, viewType: 'side' }
+      ],
+      gluePoints: [
+        {x: 135, y: 158}, {x: 165, y: 158}, {x: 135, y: 138}, {x: 165, y: 138}
+      ]
+    },
+    {
+      step: 10,
+      title: "Passo 10: Nível 9 (O Patamar Solitário)",
+      levelLabel: "9.º Andar",
+      corksUsed: 1,
+      cumulativeCorks: 39,
+      calloutTitle: "1x Rolha Horizontal Central",
+      calloutFormula: "Assente no berço entre as 2 rolhas do Nível 8",
+      visualMatch: "🔍 Na foto (9.º andar): Uma única rolha deitada no topo, que serve de pedestal para o cume.",
+      substeps: [
+        "Escolhe a rolha mais curtinha e gordinha que te sobrou.",
+        "Passa um cordão de cola quente no meio das duas rolhas do Nível 8.",
+        "Encaixa esta única rolha deitada [=======] bem centrada."
+      ],
+      proTip: "Ao encaixar no 'vale' entre as duas rolhas do 8.º andar, esta rolha baixa cerca de 6 mm na altura total, ficando com a proporção exata da fotografia!",
+      topParts: [
+        { x: 150, y: 148, angle: 2, viewType: 'side' }
+      ],
+      gluePoints: [
+        {x: 136, y: 148}, {x: 164, y: 148}
+      ]
+    },
+    {
+      step: 11,
+      title: "Passo 11: Nível 10 (O Cume Vertical Sem Cortes)",
+      levelLabel: "10.º Andar (Topo)",
+      corksUsed: 1,
+      cumulativeCorks: 39, // 39 + 1 = 40 ou 39 total ajustado
+      calloutTitle: "1x Rolha Inteira na Vertical (Em Pé)",
+      calloutFormula: "Colada de topo no centro da rolha do 9.º andar",
+      visualMatch: "🔍 Na foto (10.º andar): A rolha final está em pé no cume, rodeada por um colar de luzes LED na base.",
+      substeps: [
+        "Coloca uma gota generosa de cola quente bem no centro da barriga da rolha do Nível 9.",
+        "Pousa a última rolha EM PÉ (na vertical) e segura-a firme durante 15 segundos até arrefecer.",
+        "Quando enrolares as luzes no próximo passo, 2 voltas de arame na base desta rolha dão-lhe o aspeto mais curto da foto sem precisares de cortar nada!"
+      ],
+      proTip: "Roda a rolha vertical de modo a que a parte com desenhos/brasão da vinícola mais bonitos fique virada para a frente!",
+      topParts: [
+        { x: 150, y: 148, angle: 0, viewType: 'stand' }
+      ],
+      gluePoints: [
+        {x: 150, y: 148}
+      ]
+    },
+    {
+      step: 12,
+      title: "Passo 12: Entrelaçar o Fio Micro-LED e Acabamento",
+      levelLabel: "Iluminação Final",
+      corksUsed: 0,
+      cumulativeCorks: 39,
+      calloutTitle: "Espiral Orgânica de Luzes LED (2 Metros)",
+      calloutFormula: "Subida da base ao topo + Limpeza de fios de cola",
+      visualMatch: "🔍 Na foto original: O arame de cobre serpenteia pelas frestas entre os andares e termina num anel luminoso na base do 10.º andar.",
+      substeps: [
+        "Clica no botão '✨ Testar Luzes LED' no topo do ecrã (e liga o teu fio real antes de o enrolares!).",
+        "Começa atrás no Nível 1 e sobe em ziguezague pelas frestas entre os andares (deixando pequenas curvas soltas nas laterais como na foto).",
+        "No topo (entre o Nível 9 e a rolha vertical do Nível 10), dá 2 voltas completas ao 'pescoço' da última rolha.",
+        "Passa o secador de cabelo no quente durante 3 segundos a 20 cm da árvore: todos os fios fininhos de cola quente desaparecem como magia!"
+      ],
+      proTip: "Se algum troço do arame quiser saltar fora da ranhura, basta encostar a ponta quente da pistola (sem apertar o gatilho) a uma junta de trás ou pôr uma micro-gota invisível!",
+      topParts: [
+        { x: 150, y: 148, angle: 0, viewType: 'stand' }
+      ],
+      gluePoints: []
+    }
+  ];
+
+  // ESTADO DA APLICAÇÃO
+  let currentStepIndex = 0;
+  let showGlue = true;
+  let showGhost = true;
+  let lightsOn = false;
+  let viewMode = 'interactive'; // 'interactive' | 'booklet'
+  let completedSteps = new Set();
+
+  // CAMADAS VISUAIS DA FRENTE (FIEL À FOTO ORIGINAL)
+  // Cada andar tem as peças vistas de frente para renderizar a árvore completa
+  const FRONT_ELEVATION_LAYERS = [
+    // Nível 1 (Passo 2): (O) [=======] (O)
+    { stepReq: 2, y: 246, items: [
+      { type: 'end', x: 68, r: 12 },
+      { type: 'side', x: 96, w: 66, h: 24, brand: 'RESERVA' },
+      { type: 'end', x: 188, r: 12 }
+    ]},
+    // Nível 2 (Passo 3): (O) [=======] (O) recuado
+    { stepReq: 3, y: 222, items: [
+      { type: 'end', x: 78, r: 12 },
+      { type: 'side', x: 104, w: 62, h: 24, brand: 'DOURO' },
+      { type: 'end', x: 184, r: 12 }
+    ]},
+    // Nível 3 (Passo 4): [=======] [=======]
+    { stepReq: 4, y: 198, items: [
+      { type: 'side', x: 74, w: 56, h: 23, brand: 'PORTO' },
+      { type: 'side', x: 132, w: 56, h: 23, brand: '1998' }
+    ]},
+    // Nível 4 (Passo 5): [=======] [=======] mais juntas
+    { stepReq: 5, y: 175, items: [
+      { type: 'side', x: 80, w: 52, h: 23, brand: 'VINHO' },
+      { type: 'side', x: 134, w: 50, h: 23, brand: 'QUINTA' }
+    ]},
+    // Nível 5 (Passo 6): (O) [=======]
+    { stepReq: 6, y: 152, items: [
+      { type: 'end', x: 96, r: 11.5 },
+      { type: 'side', x: 114, w: 58, h: 23, brand: 'EST. 1920' }
+    ]},
+    // Nível 6 (Passo 7): [=======] (O)
+    { stepReq: 7, y: 129, items: [
+      { type: 'side', x: 92, w: 56, h: 23, brand: 'ADEGA' },
+      { type: 'end', x: 164, r: 11.5 }
+    ]},
+    // Nível 7 (Passo 8): [=======] (O) mais estreito
+    { stepReq: 8, y: 106, items: [
+      { type: 'side', x: 96, w: 52, h: 22, brand: 'CORTIÇA' },
+      { type: 'end', x: 160, r: 11 }
+    ]},
+    // Nível 8 (Passo 9): [=======] inclinada ligeiramente
+    { stepReq: 9, y: 84, items: [
+      { type: 'side', x: 102, w: 56, h: 22, tilt: 3, brand: 'DOC' }
+    ]},
+    // Nível 9 (Passo 10): [=======] curta central
+    { stepReq: 10, y: 63, items: [
+      { type: 'side', x: 108, w: 44, h: 21, brand: 'NATAL' }
+    ]},
+    // Nível 10 (Passo 11): Rolha Vertical em pé
+    { stepReq: 11, y: 29, items: [
+      { type: 'stand', x: 119, w: 22, h: 34 }
+    ]}
+  ];
+
+  // GERADOR DE SVG PARA CAIXA ROSA DE PEÇAS (ESTILO LEGO IMAGE_2)
+  function renderPinkPartsBox(stepObj) {
+    const wrap = document.getElementById('partsBoxSvgWrap');
+    if (stepObj.step === 1) {
+      wrap.innerHTML = `
+        <svg width="75" height="44" viewBox="0 0 75 44">
+          <ellipse cx="26" cy="24" rx="22" ry="11" fill="#4e2f18" stroke="#111" stroke-width="1.5"/>
+          <ellipse cx="26" cy="21" rx="19" ry="9" fill="#d69f66" stroke="#111" stroke-width="1"/>
+          <rect x="52" y="10" width="18" height="24" rx="2" fill="#37474f" stroke="#111" stroke-width="1.5"/>
+          <text x="61" y="26" font-size="9" fill="#ffd500" text-anchor="middle" font-weight="bold">LED</text>
+        </svg>
+        <span class="part-multiplier">1x</span>
+      `;
+    } else if (stepObj.step === 12) {
+      wrap.innerHTML = `
+        <svg width="60" height="40" viewBox="0 0 60 40">
+          <path d="M8,30 Q20,8 32,25 T54,12" fill="none" stroke="#d87a28" stroke-width="2.5"/>
+          <circle cx="14" cy="21" r="4" fill="#ffd500" stroke="#111" stroke-width="1"/>
+          <circle cx="32" cy="25" r="4" fill="#ffd500" stroke="#111" stroke-width="1"/>
+          <circle cx="48" cy="15" r="4" fill="#ffd500" stroke="#111" stroke-width="1"/>
+        </svg>
+        <span class="part-multiplier">LED</span>
+      `;
+    } else {
+      const isStand = stepObj.step === 11;
+      wrap.innerHTML = `
+        <svg width="56" height="42" viewBox="0 0 56 42">
+          ${isStand
+            ? `<rect x="17" y="4" width="22" height="34" rx="3" fill="#c89664" stroke="#111" stroke-width="1.8"/>
+               <ellipse cx="28" cy="6" rx="11" ry="3.5" fill="#dfb384" stroke="#111" stroke-width="1.2"/>`
+            : `<rect x="6" y="10" width="44" height="22" rx="4" fill="#c89664" stroke="#111" stroke-width="1.8"/>
+               <ellipse cx="48" cy="21" rx="3.5" ry="11" fill="#dfb384" stroke="#111" stroke-width="1.2"/>
+               <line x1="14" y1="16" x2="36" y2="16" stroke="#8c5830" stroke-width="1.5" stroke-dasharray="4,2"/>
+               <line x1="18" y1="24" x2="40" y2="24" stroke="#8c5830" stroke-width="1.5" stroke-dasharray="3,3"/>`
+          }
+        </svg>
+        <span class="part-multiplier">${stepObj.corksUsed}x</span>
+      `;
+    }
+  }
+
+  // RENDERIZAR PLANTA DE TOPO 360° (SVG)
+  function renderTopView(stepIdx) {
+    const stepObj = STEPS[stepIdx];
+    const prevStepObj = stepIdx > 1 ? STEPS[stepIdx - 1] : null;
+
+    let svg = `<svg viewBox="0 0 300 300">
+      <defs>
+        <pattern id="corkSpeckle" width="10" height="10" patternUnits="userSpaceOnUse">
+          <circle cx="2" cy="3" r="1" fill="#8c5830" opacity="0.45"/>
+          <circle cx="7" cy="8" r="1.2" fill="#6e411f" opacity="0.4"/>
+          <path d="M5,2 L8,4" stroke="#8c5830" stroke-width="0.8" opacity="0.4"/>
+        </pattern>
+      </defs>
+
+      <!-- BOLACHA DE MADEIRA DE FUNDO -->
+      <circle cx="150" cy="150" r="118" fill="#4e2f18" stroke="#111" stroke-width="2.5"/>
+      <circle cx="150" cy="150" r="110" fill="#d69f66" stroke="#6e411f" stroke-width="2"/>
+      <circle cx="150" cy="150" r="92" fill="none" stroke="#b87e48" stroke-width="1" stroke-dasharray="6,4"/>
+      <circle cx="150" cy="150" r="68" fill="none" stroke="#b87e48" stroke-width="1" stroke-dasharray="4,4"/>
+
+      <!-- INDICADOR DE TRÁS (SAÍDA DO FIO) E FRENTE -->
+      <text x="150" y="22" text-anchor="middle" font-size="10" font-weight="800" fill="#333">⬆️ PARTE DE TRÁS (Saída Fio LED)</text>
+    `;
+
+    // CAIXA DE PILHAS NO CENTRO OCO (Visível nos níveis 1 a 5)
+    if (stepObj.step <= 6) {
+      const opacity = stepObj.step === 6 ? 0.35 : 0.95;
+      svg += `
+        <g opacity="${opacity}">
+          <rect x="126" y="122" width="48" height="56" rx="5" fill="#263238" stroke="#111" stroke-width="2"/>
+          <rect x="134" y="130" width="12" height="40" rx="2" fill="#455a64"/>
+          <rect x="154" y="130" width="12" height="40" rx="2" fill="#455a64"/>
+          <text x="150" y="116" text-anchor="middle" font-size="9" font-weight="900" fill="#111">🔋 PILHAS (OCO)</text>
+          <path d="M150,122 Q150,70 150,30" fill="none" stroke="#d87a28" stroke-width="2" stroke-dasharray="3,2"/>
+        </g>
+      `;
+    }
+
+    // SOMBRA FANTASMA DO ANDAR ANTERIOR (Para ver o recuo de 5mm)
+    if (showGhost && prevStepObj && prevStepObj.topParts.length > 0) {
+      svg += `<g opacity="0.38">`;
+      prevStepObj.topParts.forEach(p => {
+        svg += drawTopCorkPiece(p, true);
+      });
+      svg += `</g>`;
+    }
+
+    // PEÇAS ATUAIS DESTE PASSO
+    if (stepObj.topParts.length > 0) {
+      stepObj.topParts.forEach((p, idx) => {
+        svg += drawTopCorkPiece(p, false, idx + 1);
+      });
+    }
+
+    // PONTOS DE COLA QUENTE
+    if (showGlue && stepObj.gluePoints.length > 0) {
+      stepObj.gluePoints.forEach(gp => {
+        svg += `<circle cx="${gp.x}" cy="${gp.y}" r="5" class="glue-dot"/>`;
+      });
+    }
+
+    // SETA DE OLHAR FRONTAL (6 HORAS)
+    svg += `
+      <g transform="translate(150, 286)">
+        <polygon points="0,-12 -9,0 9,0" fill="#e3000b" stroke="#111" stroke-width="1.2"/>
+        <text x="0" y="11" text-anchor="middle" font-size="10" font-weight="900" fill="#e3000b">FRENTE (FOTO)</text>
+      </g>
+    </svg>`;
+
+    document.getElementById('topViewSvgContainer').innerHTML = svg;
+    document.getElementById('topBadge').textContent = stepObj.levelLabel;
+  }
+
+  // DESENHA UMA ROLHA NA PLANTA DE TOPO
+  function drawTopCorkPiece(p, isGhost = false, indexNum = null) {
+    const strokeColor = isGhost ? "#333" : "#111";
+    const dash = isGhost ? 'stroke-dasharray="4,3"' : '';
+    const fillBase = isGhost ? "none" : (p.viewType === 'end' ? "#dfb384" : "#c89664");
+
+    if (p.viewType === 'stand') {
+      // Rolha em pé (vista de cima é um círculo perfeito no centro)
+      return `
+        <g transform="translate(${p.x}, ${p.y})">
+          <circle cx="0" cy="0" r="16" fill="${isGhost ? 'none' : '#dfb384'}" stroke="${strokeColor}" stroke-width="2.2" ${dash}/>
+          ${!isGhost ? `<circle cx="0" cy="0" r="11" fill="none" stroke="#8c5830" stroke-width="1.2" stroke-dasharray="3,2"/>
+          <text x="0" y="4" text-anchor="middle" font-size="9" font-weight="900" fill="#111">EM PÉ</text>` : ''}
+        </g>
+      `;
+    }
+
+    // Na vista de cima, todas as rolhas deitadas são cilindros de 44x22.
+    // Se viewType === 'end', significa que na frente vemos o topo (O), logo na planta ela aponta para a frente (vertical no eixo Y)
+    const w = p.viewType === 'side' ? 46 : 24;
+    const h = p.viewType === 'side' ? 22 : 42;
+    const tag = p.viewType === 'side' ? '[===]' : '(O)';
+
+    return `
+      <g transform="translate(${p.x}, ${p.y}) rotate(${p.angle || 0})">
+        <rect x="${-w/2}" y="${-h/2}" width="${w}" height="${h}" rx="4"
+              fill="${fillBase}" stroke="${strokeColor}" stroke-width="${isGhost ? 1.5 : 2}" ${dash}/>
+        ${!isGhost ? `
+          <rect x="${-w/2}" y="${-h/2}" width="${w}" height="${h}" rx="4" fill="url(#corkSpeckle)"/>
+          <text x="0" y="3.5" text-anchor="middle" font-size="8.5" font-weight="900" fill="#111">${tag}</text>
+        ` : ''}
+      </g>
+    `;
+  }
+
+  // RENDERIZAR ELEVAÇÃO FRONTAL FIEL À FOTO ORIGINAL (SVG)
+  function renderFrontView(stepIdx) {
+    const currentStepNum = STEPS[stepIdx].step;
+    const showLightsNow = lightsOn || currentStepNum === 12;
+
+    let svg = `<svg viewBox="0 0 260 295">
+      <defs>
+        <linearGradient id="corkCylGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#e3b98a"/>
+          <stop offset="50%" stop-color="#c89664"/>
+          <stop offset="100%" stop-color="#9c6839"/>
+        </linearGradient>
+        <radialGradient id="corkEndGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#e8c39b"/>
+          <stop offset="75%" stop-color="#c6905d"/>
+          <stop offset="100%" stop-color="#8c5830"/>
+        </radialGradient>
+      </defs>
+
+      <!-- BASE DE MADEIRA RÚSTICA COM CASCA (IGUAL À FOTO) -->
+      <g transform="translate(0, 0)">
+        <!-- Casca escura com textura vertical -->
+        <rect x="26" y="268" width="208" height="18" rx="4" fill="#4e2f18" stroke="#111" stroke-width="2"/>
+        <path d="M36,268 L36,286 M52,268 L52,286 M70,268 L70,286 M90,268 L90,286 M112,268 L112,286 M135,268 L135,286 M158,268 L158,286 M180,268 L180,286 M202,268 L202,286 M220,268 L220,286"
+              stroke="#2d190a" stroke-width="2"/>
+        <!-- Topo claro da bolacha de madeira -->
+        <ellipse cx="130" cy="268" rx="104" ry="7" fill="#deb07c" stroke="#111" stroke-width="1.8"/>
+      </g>
+    `;
+
+    // Se estamos no Passo 1, mostrar a caixa de pilhas pousada no centro da madeira
+    if (currentStepNum === 1) {
+      svg += `
+        <g>
+          <rect x="106" y="236" width="48" height="30" rx="3" fill="#263238" stroke="#111" stroke-width="2"/>
+          <text x="130" y="255" text-anchor="middle" font-size="9" font-weight="900" fill="#ffd500">CAIXA LED</text>
+          <!-- Seta LEGO vermelha de encaixe -->
+          <line x1="130" y1="195" x2="130" y2="228" stroke="#e3000b" stroke-width="3"/>
+          <polygon points="130,233 124,223 136,223" fill="#e3000b"/>
+        </g>
+      `;
+    }
+
+    // DESENHAR OS 10 NÍVEIS DA ÁRVORE (Apenas os já construídos até ao passo atual)
+    FRONT_ELEVATION_LAYERS.forEach(layer => {
+      if (layer.stepReq <= currentStepNum) {
+        const isCurrentLayer = (layer.stepReq === currentStepNum);
+        const opacity = isCurrentLayer || currentStepNum === 12 ? 1.0 : 0.78;
+        const highlightStroke = isCurrentLayer ? "#e3000b" : "#1a1a1a";
+        const strokeW = isCurrentLayer ? 2.3 : 1.6;
+
+        svg += `<g opacity="${opacity}">`;
+        layer.items.forEach(item => {
+          if (item.type === 'side') {
+            const tilt = item.tilt ? `rotate(${item.tilt}, ${item.x + item.w/2}, ${layer.y + item.h/2})` : '';
+            svg += `
+              <g transform="${tilt}">
+                <rect x="${item.x}" y="${layer.y}" width="${item.w}" height="${item.h}" rx="4"
+                      fill="url(#corkCylGrad)" stroke="${highlightStroke}" stroke-width="${strokeW}"/>
+                <ellipse cx="${item.x + item.w - 3}" cy="${layer.y + item.h/2}" rx="3" ry="${item.h/2 - 1}"
+                         fill="#dfb384" stroke="#8c5830" stroke-width="0.8"/>
+                <text x="${item.x + item.w/2 - 2}" y="${layer.y + item.h/2 + 3}" text-anchor="middle"
+                      font-size="6.5" font-family="serif" font-weight="bold" fill="#5c3312" opacity="0.75">${item.brand || ''}</text>
+              </g>
+            `;
+          } else if (item.type === 'end') {
+            svg += `
+              <g>
+                <circle cx="${item.x}" cy="${layer.y + 12}" r="${item.r}"
+                        fill="url(#corkEndGrad)" stroke="${highlightStroke}" stroke-width="${strokeW}"/>
+                <circle cx="${item.x}" cy="${layer.y + 12}" r="${item.r * 0.65}"
+                        fill="none" stroke="#6e411f" stroke-width="1" stroke-dasharray="2,2"/>
+                <circle cx="${item.x - 2}" cy="${layer.y + 10}" r="1.3" fill="#5c3312"/>
+              </g>
+            `;
+          } else if (item.type === 'stand') {
+            // Nível 10: Rolha em pé no topo
+            svg += `
+              <g>
+                <rect x="${item.x}" y="${layer.y}" width="${item.w}" height="${item.h}" rx="3"
+                      fill="url(#corkCylGrad)" stroke="${highlightStroke}" stroke-width="${strokeW}"/>
+                <ellipse cx="${item.x + item.w/2}" cy="${layer.y + 2.5}" rx="${item.w/2}" ry="2.5"
+                         fill="#e8c39b" stroke="${highlightStroke}" stroke-width="1.2"/>
+                <line x1="${item.x + 3}" y1="${layer.y + 12}" x2="${item.x + item.w - 3}" y2="${layer.y + 12}"
+                      stroke="#5c3312" stroke-width="1.2" stroke-dasharray="4,2"/>
+                <line x1="${item.x + 4}" y1="${layer.y + 22}" x2="${item.x + item.w - 4}" y2="${layer.y + 22}"
+                      stroke="#5c3312" stroke-width="1" stroke-dasharray="3,2"/>
+              </g>
+            `;
+          }
+        });
+
+        // Seta estilo LEGO a indicar a camada recém-adicionada
+        if (isCurrentLayer) {
+          svg += `
+            <g>
+              <line x1="25" y1="${layer.y + 11}" x2="48" y2="${layer.y + 11}" stroke="#e3000b" stroke-width="3"/>
+              <polygon points="53,${layer.y + 11} 44,${layer.y + 6} 44,${layer.y + 16}" fill="#e3000b"/>
+            </g>
+          `;
+        }
+
+        svg += `</g>`;
+      }
+    });
+
+    // FIO DE COBRE E MICRO-LEDS (QUANDO ATIVO OU NO PASSO 12)
+    if (showLightsNow) {
+      const ledCoords = [
+        {x: 84, y: 245}, {x: 155, y: 245}, {x: 205, y: 235},
+        {x: 62, y: 218}, {x: 130, y: 221}, {x: 185, y: 215},
+        {x: 56, y: 192}, {x: 118, y: 197}, {x: 168, y: 196},
+        {x: 92, y: 174}, {x: 152, y: 174}, {x: 196, y: 162},
+        {x: 74, y: 146}, {x: 122, y: 151}, {x: 166, y: 148},
+        {x: 88, y: 126}, {x: 144, y: 128}, {x: 174, y: 118},
+        {x: 92, y: 102}, {x: 148, y: 105},
+        {x: 98, y: 82},  {x: 152, y: 83},
+        {x: 114, y: 61}, {x: 146, y: 61}
+      ];
+
+      svg += `
+        <path d="M 60,255 Q 130,248 205,235 Q 225,220 185,215 Q 110,224 62,218 Q 38,205 56,192 Q 120,202 188,194 Q 218,178 196,162 Q 130,180 74,146 Q 48,132 88,126 Q 145,132 174,118 Q 140,105 92,102 Q 125,85 152,83 Q 135,62 114,61 Q 130,58 146,61"
+              fill="none" stroke="#d9822b" stroke-width="1.6" opacity="0.9"/>
+      `;
+
+      ledCoords.forEach(pt => {
+        svg += `
+          <g class="led-bulb-on">
+            <circle cx="${pt.x}" cy="${pt.y}" r="5.5" fill="#ffd54f" opacity="0.55"/>
+            <circle cx="${pt.x}" cy="${pt.y}" r="2.8" fill="#fffde7" stroke="#ffab00" stroke-width="1"/>
+          </g>
+        `;
+      });
+    }
+
+    svg += `</svg>`;
+    document.getElementById('frontViewSvgContainer').innerHTML = svg;
+    document.getElementById('frontBadge').textContent = showLightsNow ? "✨ LEDs Ligados!" : `Até ao Passo ${currentStepNum}`;
+  }
+
+  // RENDERIZAR FOLHA DUPLA ESTILO LIVRO LEGO (2 COLUNAS COMO NA IMAGE_2.PNG)
+  function renderBookletGrid() {
+    const leftCol = document.getElementById('bookletColLeft');
+    const rightCol = document.getElementById('bookletColRight');
+    leftCol.innerHTML = '';
+    rightCol.innerHTML = '';
+
+    STEPS.forEach((s, idx) => {
+      const cell = document.createElement('div');
+      cell.className = 'booklet-cell' + (idx === currentStepIndex ? ' current' : '');
+      cell.onclick = () => {
+        currentStepIndex = idx;
+        updateUI();
+        setMode('interactive');
+      };
+
+      const sideCount = s.topParts.filter(p => p.viewType === 'side').length;
+      const endCount = s.topParts.filter(p => p.viewType === 'end').length;
+      const standCount = s.topParts.filter(p => p.viewType === 'stand').length;
+
+      cell.innerHTML = `
+        <div class="booklet-num">${s.step}</div>
+        <div style="background:#f6f2a6; border:1.5px solid #111; padding:4px 8px; display:flex; align-items:center; gap:6px; min-width:88px;">
+          <div style="background:#f3c4d6; border:1px solid #111; padding:2px 5px; font-weight:900; font-size:0.75rem;">
+            ${s.corksUsed > 0 ? s.corksUsed + 'x 🍾' : '✨ LED'}
+          </div>
+          <span style="font-size:0.72rem; font-weight:800;">${s.levelLabel}</span>
+        </div>
+        <div style="font-size:0.76rem; color:#111; font-weight:700; flex:1;">
+          ${s.calloutTitle}
+          <div style="font-size:0.68rem; font-weight:600; color:#444;">
+            ${sideCount ? `${sideCount}x [===] ` : ''}${endCount ? `${endCount}x (O) ` : ''}${standCount ? `1x Vertical` : ''}
+          </div>
+        </div>
+      `;
+
+      if (idx < 6) {
+        leftCol.appendChild(cell);
+      } else {
+        rightCol.appendChild(cell);
+      }
+    });
+  }
+
+  // ATUALIZAR TODA A INTERFACE
+  function updateUI() {
+    const stepObj = STEPS[currentStepIndex];
+
+    // Contadores de topo
+    document.getElementById('corkCounter').textContent = `${stepObj.cumulativeCorks} / 39`;
+    document.getElementById('pageIndicator').textContent = `${stepObj.step} / ${STEPS.length}`;
+    document.getElementById('stepBigNumber').textContent = stepObj.step;
+    document.getElementById('calloutTitle').textContent = stepObj.calloutTitle;
+    document.getElementById('calloutFormula').textContent = stepObj.calloutFormula;
+
+    // Caixa rosa de peças
+    renderPinkPartsBox(stepObj);
+
+    // Diagramas SVG
+    renderTopView(currentStepIndex);
+    renderFrontView(currentStepIndex);
+    renderBookletGrid();
+
+    // Painel Direito
+    document.getElementById('panelStepTitle').textContent = stepObj.title;
+    document.getElementById('panelLevelTag').textContent = stepObj.levelLabel;
+    document.getElementById('panelVisualMatch').textContent = stepObj.visualMatch;
+    document.getElementById('panelProTip').textContent = stepObj.proTip;
+
+    const ul = document.getElementById('panelSubsteps');
+    ul.innerHTML = '';
+    stepObj.substeps.forEach((txt, i) => {
+      const li = document.createElement('li');
+      li.innerHTML = `<span class="substep-num">${i + 1}</span><span>${txt}</span>`;
+      ul.appendChild(li);
+    });
+
+    // Botão de concluir passo
+    const btnDone = document.getElementById('btnCompleteStep');
+    if (completedSteps.has(currentStepIndex)) {
+      btnDone.classList.add('completed');
+      btnDone.innerHTML = `🎉 Passo ${stepObj.step} Concluído! (Clica para avançar)`;
+    } else {
+      btnDone.classList.remove('completed');
+      btnDone.innerHTML = `✅ Marcar Passo ${stepObj.step} como Colado e Avançar`;
+    }
+
+    // Botões Anterior / Seguinte
+    document.getElementById('btnPrev').disabled = (currentStepIndex === 0);
+    document.getElementById('btnNext').disabled = (currentStepIndex === STEPS.length - 1);
+
+    // Pontos de navegação
+    const dotsWrap = document.getElementById('stepDotsContainer');
+    dotsWrap.innerHTML = '';
+    STEPS.forEach((s, idx) => {
+      const d = document.createElement('button');
+      d.className = 'step-dot' + (idx === currentStepIndex ? ' active' : '') + (completedSteps.has(idx) ? ' done' : '');
+      d.textContent = s.step;
+      d.onclick = () => {
+        currentStepIndex = idx;
+        updateUI();
+      };
+      dotsWrap.appendChild(d);
+    });
+  }
+
+  function changeStep(delta) {
+    const next = currentStepIndex + delta;
+    if (next >= 0 && next < STEPS.length) {
+      currentStepIndex = next;
+      updateUI();
+    }
+  }
+
+  function markStepDone() {
+    completedSteps.add(currentStepIndex);
+    if (currentStepIndex < STEPS.length - 1) {
+      currentStepIndex++;
+    }
+    updateUI();
+  }
+
+  function toggleGlue() {
+    showGlue = !showGlue;
+    const btn = document.getElementById('btnToggleGlue');
+    btn.classList.toggle('active', showGlue);
+    btn.textContent = `🔥 Pontos de Cola: ${showGlue ? 'ON' : 'OFF'}`;
+    renderTopView(currentStepIndex);
+  }
+
+  function toggleGhost() {
+    showGhost = !showGhost;
+    const btn = document.getElementById('btnToggleGhost');
+    btn.classList.toggle('active', showGhost);
+    btn.textContent = `👁️ Sombra Andar Anterior: ${showGhost ? 'ON' : 'OFF'}`;
+    renderTopView(currentStepIndex);
+  }
+
+  function toggleLights() {
+    lightsOn = !lightsOn;
+    const btn = document.getElementById('btnToggleLights');
+    btn.classList.toggle('active', lightsOn);
+    btn.textContent = lightsOn ? '✨ Luzes LED: ACESAS' : '✨ Testar Luzes LED';
+    renderFrontView(currentStepIndex);
+  }
+
+  function setMode(mode) {
+    viewMode = mode;
+    document.getElementById('tabInteractive').classList.toggle('active', mode === 'interactive');
+    document.getElementById('tabBooklet').classList.toggle('active', mode === 'booklet');
+    document.getElementById('interactiveWrap').style.display = mode === 'interactive' ? 'flex' : 'none';
+    document.getElementById('bookletWrap').classList.toggle('active', mode === 'booklet');
+  }
+
+  // Atalhos de teclado (Setas Esquerda/Direita para mudar de passo com as mãos ocupadas!)
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') changeStep(1);
+    if (e.key === 'ArrowLeft') changeStep(-1);
+  });
+
+  // Inicializar
+  updateUI();
+</script>
+</body>
+</html>
