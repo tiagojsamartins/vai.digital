@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cosmic Scale Explorer — How Far Is The Sun?</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background-color: #060814;
+      color: #f8fafc;
+      background-image: 
+        radial-gradient(circle at 15% 20%, rgba(245, 158, 11, 0.08) 0%, transparent 35%),
+        radial-gradient(circle at 85% 75%, rgba(56, 189, 248, 0.08) 0%, transparent 40%);
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    input[type="range"] {
+      accent-color: #facc15;
+    }
+  </style>
+</head>
+<body class="min-h-screen p-4 md:p-8">
+
+  <div class="max-w-5xl mx-auto space-y-8">
+    <!-- Header -->
+    <header class="border border-slate-800 bg-slate-900/70 backdrop-blur-md rounded-2xl p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <div>
+        <span class="text-xs uppercase tracking-widest px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 mono">
+          Interactive Astrophysics Lab
+        </span>
+        <h1 class="text-2xl md:text-4xl font-bold mt-2 tracking-tight">
+          How Far Away Is The Sun Really?
+        </h1>
+        <p class="text-slate-400 text-sm mt-1">
+          Line up all the planets edge-to-edge. 1x gets you to the Moon. How many times to reach the Sun?
+        </p>
+      </div>
+      <div class="bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-right">
+        <div class="text-xs text-slate-400">1x Planetary Lineup</div>
+        <div class="text-lg font-bold text-lime-400 mono">387,942 km</div>
+      </div>
+    </header>
+
+    <!-- Step 1: Lock Guess Banner -->
+    <section id="guess-section" class="border border-lime-500/30 bg-lime-950/10 rounded-2xl p-6">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-lg font-bold text-lime-300 flex items-center gap-2">
+            <span>Step 1: Lock In Your Guess (Don't Change It!)</span>
+          </h2>
+          <p class="text-sm text-slate-300 mt-1">
+            Before scrubbing through space, how many planetary lineups (<span class="mono text-lime-400">1x = Earth to Moon</span>) does it take to reach the Sun?
+          </p>
+        </div>
+        <div id="guess-controls" class="flex items-center gap-3 w-full md:w-auto">
+          <input id="guess-input" type="number" min="1" max="1000" placeholder="e.g. 120" 
+            class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-white mono w-36 focus:outline-none focus:border-lime-400" />
+          <button id="lock-guess-btn" 
+            class="bg-lime-400 hover:bg-lime-300 text-slate-950 font-bold px-5 py-2.5 rounded-xl transition">
+            Lock Guess
+          </button>
+        </div>
+        <div id="locked-badge" class="hidden items-center gap-4 bg-slate-900/90 border border-slate-700 px-4 py-2.5 rounded-xl">
+          <div>
+            <div class="text-xs text-slate-400">Locked Guess</div>
+            <div id="locked-val" class="text-lg font-bold text-lime-400 mono">--</div>
+          </div>
+          <div id="accuracy-box" class="border-l border-slate-700 pl-4">
+            <div class="text-xs text-slate-400">Difference vs 374x</div>
+            <div id="accuracy-val" class="text-sm font-semibold text-amber-400 mono">Scrub to 374x to reveal</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 2: Interactive Multiplier Scrubber -->
+    <section class="border border-slate-800 bg-slate-900/70 rounded-2xl p-6 space-y-6">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <h2 class="text-xl font-bold">Cosmic Lineup Multiplier Scrubber</h2>
+          <p class="text-sm text-slate-400">Drag the slider or jump to checkpoints from the video</p>
+        </div>
+        <div class="flex flex-wrap gap-2" id="milestone-buttons"></div>
+      </div>
+
+      <!-- Live Telemetry Readout -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl">
+          <div class="text-xs text-slate-400">Current Multiplier</div>
+          <div id="multiplier-readout" class="text-3xl font-bold text-lime-400 mono mt-1">1x</div>
+        </div>
+        <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl">
+          <div class="text-xs text-slate-400">Distance Covered</div>
+          <div id="distance-readout" class="text-2xl font-bold text-sky-400 mono mt-1">387,942 km</div>
+        </div>
+        <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl">
+          <div class="text-xs text-slate-400">Nearest Cosmic Checkpoint</div>
+          <div id="checkpoint-readout" class="text-lg font-bold text-amber-400 mt-1">The Moon (1x)</div>
+        </div>
+      </div>
+
+      <!-- Range Slider -->
+      <div>
+        <input id="cosmic-slider" type="range" min="1" max="374" value="1" class="w-full h-3 bg-slate-800 rounded-lg cursor-pointer" />
+        <div class="flex justify-between text-xs text-slate-500 mono mt-2">
+          <span>1x (Moon)</span>
+          <span>95x (Venus)</span>
+          <span>192x (Mercury)</span>
+          <span>374x (The Sun)</span>
+        </div>
+      </div>
+
+      <!-- Visual Trajectory Bar -->
+      <div class="relative bg-slate-950 border border-slate-800 rounded-2xl p-6 overflow-hidden">
+        <div class="flex items-center justify-between text-xs mono text-slate-400 mb-2">
+          <span class="text-sky-400 font-bold">● EARTH</span>
+          <span class="text-amber-400 font-bold">☀ THE SUN (149,600,000 km)</span>
+        </div>
+        <div class="w-full h-7 bg-slate-900 rounded-full overflow-hidden border border-slate-800 relative">
+          <!-- Milestone Markers -->
+          <div style="left: 25.4%" class="absolute top-0 bottom-0 w-0.5 bg-slate-600 z-10" title="95x Venus"></div>
+          <div style="left: 51.3%" class="absolute top-0 bottom-0 w-0.5 bg-slate-600 z-10" title="192x Mercury"></div>
+          <!-- Fill Bar -->
+          <div id="progress-bar" class="h-full bg-gradient-to-r from-sky-500 via-lime-400 to-amber-500 transition-all duration-150" style="width: 0.3%"></div>
+        </div>
+        <p id="narrative-caption" class="text-sm text-slate-300 mt-4 bg-slate-900/90 border border-slate-800 rounded-xl p-3.5"></p>
+      </div>
+    </section>
+
+    <!-- Grid: 1x Lineup Breakdown + Basketball Court Analogy -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- 1x Earth-to-Moon Planet Stack -->
+      <section class="border border-slate-800 bg-slate-900/70 rounded-2xl p-6 flex flex-col justify-between">
+        <div>
+          <h3 class="text-lg font-bold">Inside 1x Planetary Lineup (Earth → Moon)</h3>
+          <p class="text-xs text-slate-400 mt-1">
+            All 7 other planets lined up edge-to-edge fit inside the ~384,400 km average (405,696 km apogee) Earth-Moon gap.
+          </p>
+          <div id="planet-list" class="mt-4 space-y-2.5"></div>
+        </div>
+        <div class="mt-6 pt-4 border-t border-slate-800 flex justify-between text-xs mono text-slate-400">
+          <span>Sum of 7 Planets: 387,942 km</span>
+          <span class="text-lime-400">Lunar Apogee: 405,696 km</span>
+        </div>
+      </section>
+
+      <!-- Basketball Court Scale Analogy -->
+      <section class="border border-slate-800 bg-slate-900/70 rounded-2xl p-6 flex flex-col justify-between">
+        <div>
+          <div class="flex justify-between items-center">
+            <h3 class="text-lg font-bold">The Basketball Court Analogy</h3>
+            <span class="text-xs bg-amber-500/10 text-amber-300 border border-amber-500/20 px-2.5 py-1 rounded-lg mono">
+              1 : 5.8 Billion Scale
+            </span>
+          </div>
+          <p class="text-xs text-slate-400 mt-1">
+            "If the Sun were a basketball, the Earth would be a pinhead separated by a whole basketball court."
+          </p>
+
+          <!-- SVG Court Representation -->
+          <div class="mt-4 bg-amber-950/20 border-2 border-amber-500/30 rounded-xl p-4 relative">
+            <svg viewBox="0 0 400 190" class="w-full h-44 rounded-lg bg-[#1e293b]">
+              <!-- Court Lines -->
+              <rect x="10" y="10" width="380" height="170" fill="none" stroke="#94a3b8" stroke-width="2"/>
+              <line x1="200" y1="10" x2="200" y2="180" stroke="#94a3b8" stroke-width="2"/>
+              <circle cx="200" cy="95" r="28" fill="none" stroke="#94a3b8" stroke-width="2"/>
+              <!-- Left Key (Sun) -->
+              <rect x="10" y="55" width="65" height="80" fill="rgba(245, 158, 11, 0.1)" stroke="#94a3b8" stroke-width="1.5"/>
+              <!-- Right Key (Earth) -->
+              <rect x="325" y="55" width="65" height="80" fill="rgba(56, 189, 248, 0.1)" stroke="#94a3b8" stroke-width="1.5"/>
+              <!-- Separation Vector -->
+              <line x1="28" y1="95" x2="372" y2="95" stroke="#a3e635" stroke-width="2" stroke-dasharray="5,5"/>
+              <!-- Sun (Basketball at Baseline) -->
+              <circle cx="24" cy="95" r="12" fill="#f97316" stroke="#fde047" stroke-width="2"/>
+              <text x="24" y="125" fill="#fde047" font-size="10" font-family="monospace" text-anchor="middle">SUN (24cm)</text>
+              <!-- Earth (Pinhead at Far Baseline) -->
+              <circle cx="376" cy="95" r="3" fill="#38bdf8"/>
+              <text x="355" y="125" fill="#38bdf8" font-size="10" font-family="monospace" text-anchor="middle">EARTH (2.2mm)</text>
+              <!-- Court Distance Label -->
+              <rect x="140" y="83" width="120" height="22" rx="4" fill="#0f172a" stroke="#a3e635" stroke-width="1"/>
+              <text x="200" y="98" fill="#a3e635" font-size="11" font-family="monospace" text-anchor="middle">28 Meters (1 Court)</text>
+            </svg>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2 mt-4 text-center">
+          <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800">
+            <div class="text-[11px] text-slate-400">Sun Diameter</div>
+            <div class="text-sm font-bold text-amber-400 mono">24.0 cm</div>
+            <div class="text-[10px] text-slate-500">Basketball</div>
+          </div>
+          <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800">
+            <div class="text-[11px] text-slate-400">Earth Diameter</div>
+            <div class="text-sm font-bold text-sky-400 mono">2.2 mm</div>
+            <div class="text-[10px] text-slate-500">Pinhead</div>
+          </div>
+          <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800">
+            <div class="text-[11px] text-slate-400">Separation</div>
+            <div class="text-sm font-bold text-lime-400 mono">28.0 m</div>
+            <div class="text-[10px] text-slate-500">Full Court</div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    // 1. Contextual Domain Objects
+    const SOLAR_SYSTEM_DATA = {
+      lineupTotalKm: 387942,
+      sunDistanceKm: 149600000,
+      planets: [
+        { id: 'mercury', name: 'Mercury', diameterKm: 4879, color: '#94a3b8' },
+        { id: 'venus', name: 'Venus', diameterKm: 12104, color: '#eab308' },
+        { id: 'mars', name: 'Mars', diameterKm: 6779, color: '#ef4444' },
+        { id: 'jupiter', name: 'Jupiter', diameterKm: 139820, color: '#f97316' },
+        { id: 'saturn', name: 'Saturn', diameterKm: 116460, color: '#fde047' },
+        { id: 'uranus', name: 'Uranus', diameterKm: 50724, color: '#38bdf8' },
+        { id: 'neptune', name: 'Neptune', diameterKm: 49244, color: '#3b82f6' }
+      ],
+      milestones: [
+        {
+          multiplier: 1,
+          label: 'The Moon (1x)',
+          body: 'Moon (at farthest point)',
+          narration: 'At 1x (387,942 km), lining up every other planet in our solar system edge-to-edge barely bridges the gap from Earth to the Moon!'
+        },
+        {
+          multiplier: 95,
+          label: 'Venus (95x)',
+          body: 'Venus (at closest point)',
+          narration: 'At 95x (~36.8 million km), your planetary chain reaches Venus at its closest point to Earth—still only a quarter of the way to the Sun.'
+        },
+        {
+          multiplier: 192,
+          label: 'Mercury (192x)',
+          body: 'Mercury (at closest point)',
+          narration: 'At 192x (~74.5 million km), you finally reach Mercury. You have lined up the entire solar system nearly 200 times and are only halfway there!'
+        },
+        {
+          multiplier: 374,
+          label: 'The Sun (374x)',
+          body: 'The Sun (149,600,000 km)',
+          narration: 'At 374x (~149.6 million km), you finally reach the surface of the Sun! That is the equivalent of a pinhead and a basketball separated by a full basketball court.'
+        }
+      ]
+    };
+
+    const state = {
+      multiplier: 1,
+      lockedGuess: null
+    };
+
+    // DOM Elements
+    const slider = document.getElementById('cosmic-slider');
+    const multReadout = document.getElementById('multiplier-readout');
+    const distReadout = document.getElementById('distance-readout');
+    const checkReadout = document.getElementById('checkpoint-readout');
+    const progressBar = document.getElementById('progress-bar');
+    const narrativeCaption = document.getElementById('narrative-caption');
+    const milestoneBtns = document.getElementById('milestone-buttons');
+    const planetList = document.getElementById('planet-list');
+
+    // Render Planet Breakdown
+    SOLAR_SYSTEM_DATA.planets.forEach(p => {
+      const pct = ((p.diameterKm / SOLAR_SYSTEM_DATA.lineupTotalKm) * 100).toFixed(1);
+      const row = document.createElement('div');
+      row.className = 'space-y-1';
+      row.innerHTML = `
+        <div class="flex justify-between text-xs">
+          <span class="font-semibold flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full inline-block" style="background:${p.color}"></span>
+            ${p.name}
+          </span>
+          <span class="mono text-slate-400">${p.diameterKm.toLocaleString()} km (${pct}%)</span>
+        </div>
+        <div class="w-full h-2 bg-slate-950 rounded-full overflow-hidden">
+          <div class="h-full rounded-full" style="width:${Math.max(pct, 2)}%; background:${p.color}"></div>
+        </div>
+      `;
+      planetList.appendChild(row);
+    });
+
+    // Render Milestone Quick-Jump Buttons
+    SOLAR_SYSTEM_DATA.milestones.forEach(m => {
+      const btn = document.createElement('button');
+      btn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold mono border border-slate-700 bg-slate-800 hover:border-lime-400 transition';
+      btn.textContent = m.label;
+      btn.onclick = () => updateMultiplier(m.multiplier);
+      milestoneBtns.appendChild(btn);
+    });
+
+    function updateMultiplier(val) {
+      state.multiplier = Number(val);
+      slider.value = state.multiplier;
+
+      const km = state.multiplier === 374 
+        ? SOLAR_SYSTEM_DATA.sunDistanceKm 
+        : state.multiplier * SOLAR_SYSTEM_DATA.lineupTotalKm;
+
+      multReadout.textContent = `${state.multiplier}x`;
+      distReadout.textContent = `${km.toLocaleString()} km`;
+
+      // Determine active milestone
+      let activeMilestone = SOLAR_SYSTEM_DATA.milestones[0];
+      for (const m of SOLAR_SYSTEM_DATA.milestones) {
+        if (state.multiplier >= m.multiplier) activeMilestone = m;
+      }
+      checkReadout.textContent = activeMilestone.label;
+      narrativeCaption.textContent = activeMilestone.narration;
+
+      const pct = Math.min(100, Math.max(0.5, (state.multiplier / 374) * 100));
+      progressBar.style.width = `${pct}%`;
+
+      if (state.lockedGuess !== null && state.multiplier === 374) {
+        const diff = Math.abs(374 - state.lockedGuess);
+        document.getElementById('accuracy-val').textContent = 
+          diff === 0 ? 'Spot On! (0 off)' : `Off by ${diff} lineups`;
+      }
+    }
+
+    slider.addEventListener('input', (e) => updateMultiplier(e.target.value));
+
+    // Lock Guess Handler
+    document.getElementById('lock-guess-btn').addEventListener('click', () => {
+      const val = parseInt(document.getElementById('guess-input').value, 10);
+      if (!val || val < 1) return;
+      state.lockedGuess = val;
+      document.getElementById('guess-controls').classList.add('hidden');
+      const badge = document.getElementById('locked-badge');
+      badge.classList.remove('hidden');
+      badge.classList.add('flex');
+      document.getElementById('locked-val').textContent = `${val}x`;
+      if (state.multiplier === 374) updateMultiplier(374);
+    });
+
+    // Initialize
+    updateMultiplier(1);
+  </script>
+</body>
+</html>
