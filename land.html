@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vai.digital · Consultoria de Transformação Digital & Automação para PME</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brand: #2f9e60;
+      --brand-deep: #1e7a48;
+      --brand-light: #4cb87e;
+      --brand-glow: rgba(47, 158, 96, 0.22);
+      --dark-bg: #0f1a13;
+      --dark-card: #15241b;
+      --ink: #16231b;
+      --ink-soft: #4a5b50;
+      --line: #d8e2d4;
+      --line-dark: #23382c;
+      --paper: #ffffff;
+      --cream: #f4f7f1;
+      --cream-2: #eef3ea;
+      --radius: 20px;
+      --shadow-soft: 0 1px 3px rgba(22,35,27,0.04), 0 8px 24px rgba(22,35,27,0.06);
+      --shadow-lift: 0 24px 60px -20px rgba(30,122,72,0.28), 0 8px 20px -8px rgba(22,35,27,0.12);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: 'Hanken Grotesk', system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    .font-display { font-family: 'Bricolage Grotesque', sans-serif; letter-spacing: -0.02em; }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+    /* --- HEADER --- * /
+    header.site {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      padding: 16px 0;
+    }
+    .nav-container { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .brand-logo {
+      width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center;
+      background: linear-gradient(150deg, #ffffff, #eef4ee);
+      border: 1.5px solid var(--line); box-shadow: var(--shadow-soft);
+    }
+    .brand-logo svg { width: 28px; height: 28px; display: block; }
+    .brand-text .name { font-family: 'Bricolage Grotesque'; font-weight: 800; font-size: 1.25rem; color: var(--ink); letter-spacing: -0.03em; line-height: 1; }
+    .brand-text .name span { color: var(--brand); }
+    .brand-text .sub { font-size: 0.72rem; color: var(--ink-soft); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; margin-top: 3px; }
+    
+    .nav-links { display: none; align-items: center; gap: 28px; }
+    @media(min-width: 768px) { .nav-links { display: flex; } }
+    .nav-links a { font-size: 0.9rem; font-weight: 600; color: var(--ink-soft); text-decoration: none; transition: color 0.15s; }
+    .nav-links a:hover { color: var(--brand); }
+
+    .btn-wa-header {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--brand); color: #fff; font-weight: 700; font-size: 0.88rem;
+      padding: 10px 18px; border-radius: 999px; text-decoration: none;
+      box-shadow: 0 4px 14px rgba(47,158,96,0.3); transition: transform 0.15s, background 0.15s;
+    }
+    .btn-wa-header:hover { background: var(--brand-deep); transform: translateY(-1px); }
+
+    /* --- HERO SECTION (Dark Mode Impact) --- */
+    .hero {
+      background: var(--dark-bg);
+      background-image: 
+        radial-gradient(circle at 15% 20%, rgba(61,148,96,0.18), transparent 45%),
+        radial-gradient(circle at 85% 80%, rgba(47,158,96,0.15), transparent 45%);
+      color: #fff;
+      padding: 90px 0 100px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-grid { display: grid; grid-template-columns: 1fr; gap: 40px; align-items: center; }
+    @media(min-width: 920px) { .hero-grid { grid-template-columns: 1.2fr 0.8fr; } }
+    
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.8rem; font-weight: 700; color: var(--brand-light);
+      background: rgba(61,148,96,0.15); border: 1px solid rgba(61,148,96,0.3);
+      padding: 6px 14px; border-radius: 99px; margin-bottom: 20px;
+      text-transform: uppercase; letter-spacing: 0.1em;
+    }
+    .hero h1 { font-size: clamp(2.4rem, 5.5vw, 4rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.035em; margin-bottom: 20px; }
+    .hero h1 span { color: var(--brand-light); position: relative; }
+    .hero p { font-size: 1.12rem; color: #a1b3a8; max-width: 540px; margin-bottom: 32px; line-height: 1.6; }
+    
+    .hero-cta-group { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+    .btn-primary {
+      font-family: 'Bricolage Grotesque'; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      background: linear-gradient(135deg, var(--brand-light), var(--brand)); color: #fff;
+      font-weight: 700; font-size: 1rem; padding: 16px 28px; border-radius: 14px;
+      text-decoration: none; box-shadow: 0 12px 30px rgba(47,158,96,0.4); transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 36px rgba(47,158,96,0.5); }
+    
+    .hero-card-preview {
+      background: var(--dark-card); border: 1px solid var(--line-dark);
+      border-radius: 24px; padding: 32px; box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    }
+    .hero-card-preview h3 { font-family: 'Bricolage Grotesque'; font-size: 1.25rem; font-weight: 700; margin-bottom: 12px; color: #fff; }
+    .hero-card-preview p { font-size: 0.95rem; color: #9bb0a4; margin-bottom: 24px; }
+    .stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; border-top: 1px solid var(--line-dark); padding-top: 20px; }
+    .stat-num { font-family: 'Bricolage Grotesque'; font-size: 1.8rem; font-weight: 800; color: var(--brand-light); }
+    .stat-lbl { font-size: 0.8rem; color: #82968a; font-weight: 600; }
+
+    /* --- SECTION: THE PROBLEM --- */
+    .section { padding: 90px 0; }
+    .section-header { text-align: center; max-width: 680px; margin: 0 auto 60px; }
+    .section-header .tag { font-size: 0.78rem; font-weight: 700; color: var(--brand-deep); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 10px; display: block; }
+    .section-header h2 { font-family: 'Bricolage Grotesque'; font-size: clamp(2rem, 3.8vw, 2.8rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; color: var(--ink); }
+    
+    .problems-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    @media(min-width: 768px) { .problems-grid { grid-template-columns: repeat(3, 1fr); } }
+    
+    .problem-card {
+      background: var(--cream); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 30px; transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .problem-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-soft); }
+    .problem-num { font-family: 'Bricolage Grotesque'; font-size: 2.2rem; font-weight: 800; color: #d1e2d7; margin-bottom: 16px; line-height: 1; }
+    .problem-card h3 { font-family: 'Bricolage Grotesque'; font-size: 1.15rem; font-weight: 700; margin-bottom: 10px; color: var(--ink); }
+    .problem-card p { font-size: 0.92rem; color: var(--ink-soft); line-height: 1.5; }
+
+    /* --- SECTION: METHOD / TIMELINE --- */
+    .method-section { background: var(--cream); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .steps-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+    @media(min-width: 920px) { .steps-grid { grid-template-columns: repeat(4, 1fr); } }
+    
+    .step-card {
+      background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 28px 24px; position: relative; box-shadow: var(--shadow-soft);
+    }
+    .step-badge {
+      width: 32px; height: 32px; border-radius: 10px; background: rgba(47,158,96,0.12);
+      color: var(--brand-deep); font-family: 'Bricolage Grotesque'; font-weight: 800; font-size: 0.95rem;
+      display: grid; place-items: center; margin-bottom: 18px;
+    }
+    .step-card h3 { font-family: 'Bricolage Grotesque'; font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; color: var(--ink); }
+    .step-card p { font-size: 0.88rem; color: var(--ink-soft); line-height: 1.5; }
+
+    /* --- SECTION: BENTO GRID (Solutions) --- */
+    .bento-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+    @media(min-width: 920px) { .bento-grid { grid-template-columns: repeat(3, 1fr); grid-template-rows: auto auto; } }
+    
+    .bento-card {
+      background: var(--cream); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 32px; display: flex; flex-direction: column; justify-content: space-between;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .bento-card:hover { border-color: var(--brand); transform: translateY(-2px); }
+    .bento-card.wide {
+      @media(min-width: 920px) { grid-column: span 2; }
+      background: linear-gradient(135deg, #15241b, #0f1a13); color: #fff; border-color: #23382c;
+    }
+    .bento-card.wide h3 { color: #fff; }
+    .bento-card.wide p { color: #9bb0a4; }
+    
+    .bento-icon {
+      width: 44px; height: 44px; border-radius: 12px; background: rgba(47,158,96,0.12);
+      color: var(--brand-deep); display: grid; place-items: center; margin-bottom: 24px;
+    }
+    .bento-card.wide .bento-icon { background: rgba(76,184,126,0.2); color: var(--brand-light); }
+    
+    .bento-card h3 { font-family: 'Bricolage Grotesque'; font-size: 1.25rem; font-weight: 700; margin-bottom: 10px; color: var(--ink); }
+    .bento-card p { font-size: 0.93rem; color: var(--ink-soft); line-height: 1.5; }
+    .bento-link {
+      display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: 0.88rem;
+      color: var(--brand); text-decoration: none; margin-top: 20px;
+    }
+    .bento-link:hover { text-decoration: underline; }
+
+    /* --- SECTION: PILLARS (Trust) --- */
+    .pillars-section { background: var(--dark-bg); color: #fff; padding: 90px 0; }
+    .pillars-section .section-header h2 { color: #fff; }
+    .pillars-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    @media(min-width: 920px) { .pillars-grid { grid-template-columns: repeat(4, 1fr); } }
+    
+    .pillar-card {
+      background: var(--dark-card); border: 1px solid var(--line-dark); border-radius: var(--radius);
+      padding: 30px;
+    }
+    .pillar-card h3 { font-family: 'Bricolage Grotesque'; font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 10px; }
+    .pillar-card p { font-size: 0.88rem; color: #9bb0a4; line-height: 1.5; }
+
+    /* --- SECTION: CASE STUDIES & TESTIMONIALS --- */
+    .cases-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    @media(min-width: 920px) { .cases-grid { grid-template-columns: repeat(2, 1fr); } }
+    
+    .case-card {
+      background: var(--cream); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 36px; display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .case-tag { font-size: 0.75rem; font-weight: 700; color: var(--brand-deep); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px; display: inline-block; background: rgba(47,158,96,0.1); padding: 4px 10px; border-radius: 6px; }
+    .case-card blockquote { font-size: 1.05rem; font-style: italic; color: var(--ink); line-height: 1.6; margin-bottom: 24px; }
+    .case-author { font-weight: 700; font-size: 0.95rem; color: var(--ink); }
+    .case-company { font-size: 0.82rem; color: var(--ink-soft); font-weight: 500; }
+
+    /* --- SECTION: FAQS --- */
+    .faq-container { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+    .faq-item { background: var(--cream); border: 1px solid var(--line); border-radius: 16px; padding: 24px 28px; }
+    .faq-item h3 { font-family: 'Bricolage Grotesque'; font-size: 1.05rem; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+    .faq-item p { font-size: 0.92rem; color: var(--ink-soft); line-height: 1.6; }
+
+    /* --- FOOTER --- */
+    footer { background: var(--dark-bg); color: #fff; padding: 80px 0 40px; border-top: 1px solid var(--line-dark); }
+    .footer-cta {
+      background: linear-gradient(135deg, #15241b, #101c15); border: 1px solid #23382c;
+      border-radius: 28px; padding: 50px; text-align: center; margin-bottom: 60px;
+    }
+    .footer-cta h2 { font-family: 'Bricolage Grotesque'; font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 800; margin-bottom: 16px; }
+    .footer-cta p { color: #9bb0a4; max-width: 500px; margin: 0 auto 30px; font-size: 1.02rem; }
+    
+    .footer-grid { display: grid; grid-template-columns: 1fr; gap: 40px; padding-bottom: 50px; border-bottom: 1px solid var(--line-dark); }
+    @media(min-width: 768px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr; } }
+    
+    .footer-col h4 { font-family: 'Bricolage Grotesque'; font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.08em; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul a { color: #9bb0a4; text-decoration: none; font-size: 0.9rem; transition: color 0.15s; }
+    .footer-col ul a:hover { color: var(--brand-light); }
+    
+    .footer-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px; padding-top: 30px; font-size: 0.84rem; color: #73877b; }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site">
+    <div class="wrap nav-container">
+      <a href="#" class="brand">
+        <div class="brand-logo">
+          <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="480,200 560,500 680,260" fill="#2f9e60"></polygon>
+            <polygon points="540,180 680,260 760,160" fill="#2f9e60"></polygon>
+            <polygon points="720,100 800,140 760,80" fill="#2f9e60"></polygon>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <div class="name">vai<span>.</span>digital</div>
+          <div class="sub">Consultoria & Automação</div>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="#problema">O Problema</a>
+        <a href="#metodo">Método</a>
+        <a href="#solucoes">Soluções</a>
+        <a href="#garantias">Garantias</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <a href="https://wa.me/+351914000309" target="_blank" class="btn-wa-header">
+        Falar por WhatsApp
+      </a>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="hero-badge">Transformação Digital Pragmática para PMEs</div>
+        <h1 class="font-display">Recupere tempo operacional, automatize processos e <span>escale vendas.</span></h1>
+        <p>Ajudamos negócios tradicionais e empresas em crescimento a eliminar o caos de dados, reduzir tarefas manuais e implementar tecnologia de impacto real — com sentimento de dono[span_2](start_span)[span_2](end_span).</p>
+        <div class="hero-cta-group">
+          <a href="https://wa.me/+351914000309" target="_blank" class="btn-primary">
+            Agendar Reunião via WhatsApp
+          </a>
+        </div>
+      </div>
+      <div>
+        <div class="hero-card-preview">
+          <h3>Abordagem Pareto (80/20)</h3>
+          <p>Focamo-nos nos 20% das melhorias operacionais que geram 80% do retorno direto no seu negócio, sem jargão técnico[span_3](start_span)[span_3](end_span).</p>
+          <div class="stat-row">
+            <div>
+              <div class="stat-num">100%</div>
+              <div class="stat-lbl">Chave-na-Mão</div>
+            </div>
+            <div>
+              <div class="stat-num">0h</div>
+              <div class="stat-lbl">Desperdício manual</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: O PROBLEMA -->
+  <section class="section" id="problema">
+    <div class="wrap">
+      <div class="section-header">
+        <span class="tag">Os Bloqueios Invisíveis</span>
+        <h2>O que está a travar o crescimento do seu negócio?</h2>
+      </div>
+      <div class="problems-grid">
+        <div class="problem-card">
+          <div class="problem-num">01</div>
+          <h3>Tarefas Manuais e Repetitivas</h3>
+          <p>Horas preciosas da sua equipa gastas em processos burocráticos e cópias de dados que poderiam estar a focar-se na estratégia e nos clientes.</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-num">02</div>
+          <h3>Ferramentas Desligadas</h3>
+          <p>O clássico caos de dados entre folhas de cálculo dispersas, software de faturação e caixas de e-mail que não comunicam entre si.</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-num">03</div>
+          <h3>Vendas Perdidas</h3>
+          <p>Oportunidades que escapam por falta de seguimento comercial estruturado e ausência de uma presença digital verdadeiramente otimizada.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: MÉTODO (4 ETAPAS) -->
+  <section class="section method-section" id="metodo">
+    <div class="wrap">
+      <div class="section-header">
+        <span class="tag">Método Chave-na-Mão</span>
+        <h2>Como transformamos a sua operação</h2>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-badge">1</div>
+          <h3>Diagnóstico & Alinhamento</h3>
+          <p>Auditoria pragmática de processos para identificar gargalos e oportunidades de ganho rápido sem complicar.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-badge">2</div>
+          <h3>Arquitetura & Planeamento</h3>
+          <p>Desenho de soluções tecnológicas à medida do seu orçamento e necessidades operacionais reais.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-badge">3</div>
+          <h3>Implementação Chave-na-Mão</h3>
+          <p>Tratamos de toda a configuração, automação, integração de sistemas e IA sem que tenha de se preocupar com a técnica.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-badge">4</div>
+          <h3>Formação & Escala</h3>
+          <p>Capacitação prática da sua equipa e acompanhamento contínuo para garantir autonomia total no dia a dia.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: BENTO GRID (SOLUÇÕES) -->
+  <section class="section" id="solucoes">
+    <div class="wrap">
+      <div class="section-header">
+        <span class="tag">Soluções de Impacto</span>
+        <h2>Tudo o que o seu negócio precisa para escalar digitalmente</h2>
+      </div>
+      <div class="bento-grid">
+        <!-- Card 1 (Wide) -->
+        <div class="bento-card wide">
+          <div>
+            <div class="bento-icon">⚡</div>
+            <h3>Automação de Processos & Tarefas</h3>
+            <p>Elimine o trabalho manual repetitivo, ligue as suas aplicações de eleição e recupere dezenas de horas semanais na gestão da empresa.</p>
+          </div>
+          <a href="https://wa.me/+351914000309" target="_blank" class="bento-link" style="color: var(--brand-light);">Saber mais sobre automação &rarr;</a>
+        </div>
+        <!-- Card 2 -->
+        <div class="bento-card">
+          <div>
+            <div class="bento-icon">🔗</div>
+            <h3>Sistemas & CRM Integrados</h3>
+            <p>Faturação, CRMs (como Pipedrive ou ActiveCampaign), e-mail e folhas de cálculo finalmente a falar uns com os outros em tempo real.</p>
+          </div>
+        </div>
+        <!-- Card 3 -->
+        <div class="bento-card">
+          <div>
+            <div class="bento-icon">🤖</div>
+            <h3>Inteligência Artificial Aplicada</h3>
+            <p>Assistentes inteligentes, triagem automática de leads e otimização operacional sem complicações tecnológicas.</p>
+          </div>
+        </div>
+        <!-- Card 4 -->
+        <div class="bento-card">
+          <div>
+            <div class="bento-icon">📈</div>
+            <h3>Presença Digital & Conversão</h3>
+            <p>Websites rápidos, landing pages orientadas a conversão e funis estruturados para gerar contactos qualificados.</p>
+          </div>
+        </div>
+        <!-- Card 5 -->
+        <div class="bento-card">
+          <div>
+            <div class="bento-icon">🧰</div>
+            <h3>Ferramentas & Dashboards à Medida</h3>
+            <p>Simuladores financeiros interativos, calculadoras e painéis de controlo para apoiar a tomada de decisão com dados claros.</p>
+          </div>
+        </div>
+        <!-- Card 6 -->
+        <div class="bento-card">
+          <div>
+            <div class="bento-icon">📱</div>
+            <h3>vai.digital QR Studio</h3>
+            <p>Aceda à nossa ferramenta integrada de criação de QR codes profissionais personalizados com a sua marca, sem registo e sem marcas de água[span_4](start_span)[span_4](end_span).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: PILLARS (GARANTIAS) -->
+  <section class="pillars-section" id="garantias">
+    <div class="wrap">
+      <div class="section-header">
+        <span class="tag" style="color: var(--brand-light);">Pilares de Confiança</span>
+        <h2>Porque escolher a vai.digital como seu parceiro</h2>
+      </div>
+      <div class="pillars-grid">
+        <div class="pillar-card">
+          <h3>Soluções Chave-na-Mão</h3>
+          <p>Tratamos de toda a configuração técnica e montagem; recebe o sistema inteiramente pronto a funcionar[span_5](start_span)[span_5](end_span).</p>
+        </div>
+        <div class="pillar-card">
+          <h3>Foco no Retorno (80/20)</h3>
+          <p>Priorizamos as melhorias práticas que trazem maior poupança de tempo e impacto direto imediato na faturação.</p>
+        </div>
+        <div class="pillar-card">
+          <h3>Formação Simples</h3>
+          <p>Capacitamos a sua equipa sem jargão técnico desnecessário para garantir uma transição suave e sem atritos[span_6](start_span)[span_6](end_span).</p>
+        </div>
+        <div class="pillar-card">
+          <h3>Acompanhamento Próximo</h3>
+          <p>Suporte contínuo e mentalidade de verdadeiro parceiro — cuidamos da sua operação tecnológica como se fosse nossa[span_7](start_span)[span_7](end_span).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: CASOS DE ESTUDO & TESTEMUNHOS -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-header">
+        <span class="tag">Casos Reais</span>
+        <h2>Projetos, enólogos e marcas de referência que confiam na nossa visão</h2>
+      </div>
+      <div class="cases-grid">
+        <div class="case-card">
+          <div>
+            <span class="case-tag">Estratégia Digital & Automação</span>
+            <blockquote>"O acompanhamento e a estrutura tecnológica implementada permitiram-nos otimizar a comunicação digital e focar no que realmente importa: o produto e os clientes."</blockquote>
+          </div>
+          <div>
+            <div class="case-author">Marcella Delphim (@cariocadevinho)</div>
+            <div class="case-company">Especialista em Enologia & Estratégia de Conteúdo</div>
+          </div>
+        </div>
+        <div class="case-card">
+          <div>
+            <span class="case-tag">Consultoria B2B & Plataformas</span>
+            <blockquote>"A clareza na arquitetura da landing page e a estruturação do pitch comercial B2B transformaram totalmente a forma como apresentamos os nossos serviços vitivinícolas."</blockquote>
+          </div>
+          <div>
+            <div class="case-author">Seabra Winemakers</div>
+            <div class="case-company">Consultoria e Enologia de Referência em Portugal</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: FAQS -->
+  <section class="section" style="background: var(--cream);" id="faq">
+    <div class="wrap">
+      <div class="section-header">
+        <span class="tag">Esclarecimentos</span>
+        <h2>Perguntas Frequentes</h2>
+      </div>
+      <div class="faq-container">
+        <div class="faq-item">
+          <h3>Quanto tempo demora a implementar uma solução da vai.digital?</h3>
+          <p>Os projetos são modulares e desenhados para gerar valor operacional imediato, com entregas rápidas adaptadas ao ritmo da sua empresa.</p>
+        </div>
+        <div class="faq-item">
+          <h3>A minha equipa precisa de conhecimentos técnicos avançados?</h3>
+          <p>De todo. Focamo-nos em criar ferramentas e processos intuitivos, acompanhados de formação prática para que toda a equipa ganhe autonomia desde o primeiro dia.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Como funciona o primeiro contacto e alinhamento?</h3>
+          <p>Fazemos uma análise pragmática baseada na regra 80/20 para identificar os maiores gargalos operacionais do seu negócio e apresentar soluções diretas.</p>
+        </div>
+        <div class="faq-item">
+          <h3>O que está incluído no modelo Chave-na-Mão?</h3>
+          <p>Cuidamos de todo o processo: desde a análise estratégica, desenho da solução e automações técnicas até à entrega final do sistema a operar sem complicações.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap">
+      <div class="footer-cta">
+        <h2>Pronto para dar o próximo passo na digitalização do seu negócio?</h2>
+        <p>Fale diretamente connosco por WhatsApp e descubra como podemos ajudar a recuperar tempo e escalar resultados.</p>
+        <a href="https://wa.me/+351914000309" target="_blank" class="btn-primary">
+          Falar via WhatsApp Agora
+        </a>
+      </div>
+
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="#" class="brand" style="margin-bottom: 16px; display: inline-flex;">
+            <div class="brand-logo">
+              <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px;">
+                <polygon points="480,200 560,500 680,260" fill="#2f9e60"></polygon>
+              </svg>
+            </div>
+            <div class="brand-text">
+              <div class="name" style="color:#fff;">vai<span>.</span>digital</div>
+            </div>
+          </a>
+          <p style="color: #9bb0a4; font-size: 0.9rem; max-width: 320px; line-height: 1.5;">
+            Consultoria de transformação digital, automação de processos e IA para PMEs e negócios com ambição em Portugal. Com base em Porto, Portugal[span_8](start_span)[span_8](end_span).
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="#problema">O Problema</a></li>
+            <li><a href="#metodo">Método</a></li>
+            <li><a href="#solucoes">Soluções & Bento Grid</a></li>
+            <li><a href="#garantias">Pilares de Confiança</a></li>
+            <li><a href="#faq">Perguntas Frequentes</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Ferramentas & Contacto</h4>
+          <ul>
+            <li><a href="https://tiagojsamartins.github.io/vai.digital/qr.html" target="_blank">vai.digital QR Studio[span_9](start_span)[span_9](end_span)</a></li>
+            <li><a href="https://wa.me/+351914000309" target="_blank">WhatsApp Direto</a></li>
+            <li style="color: #73877b; margin-top: 8px;">Porto, Portugal[span_10](start_span)[span_10](end_span)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 vai.digital. Todos os direitos reservados.</div>
+        <div>Transformação digital pragmática com sentimento de dono[span_11](start_span)[span_11](end_span).</div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
