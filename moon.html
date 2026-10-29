@@ -1,0 +1,903 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Até à Lua</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Martian+Mono:wght@400;600&family=Unbounded:wght@500;700;800&display=swap">
+<style>
+:root{
+  /* Layout: uma descida vertical. Hero com a tese, palco fixo onde a escala se corrige, comparador, pista à escala real com painel, chegada. */
+  color-scheme: dark;
+  --space:#0B1238;
+  --space-deep:#070C2A;
+  --space-raised:#151F57;
+  --glass:rgba(10,16,52,.9);
+  --line:#28346F;
+  --line-strong:#3A4790;
+  --ink:#F4F2FF;
+  --ink-soft:#B6BCE6;
+  --ink-faint:#8189C2;
+  --sun:#FFD03A;
+  --on-sun:#0B1238;
+  --coral:#FF6A55;
+  --mint:#3EE6A8;
+  --earth:#4FB3FF;
+  --earth-deep:#1A4FB0;
+  --moon:#DAD6CC;
+  --moon-deep:#8E897F;
+  --belt:rgba(255,208,58,.075);
+  --ring:#E9C27A;
+  --p-mercurio:#9C95BD; --p-venus:#F2C14E; --p-marte:#E8463F; --p-jupiter:#F2CFA8;
+  --p-saturno:#C98A2B; --p-urano:#62D8E8; --p-neptuno:#4A6CFF;
+  --f-display:"Unbounded","Arial Black",system-ui,sans-serif;
+  --f-body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"Martian Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));
+  padding-right:max(16px, env(safe-area-inset-right, 0px));
+  background:var(--space);
+  color:var(--ink);
+  font:400 1.0625rem/1.55 var(--f-body);
+  -webkit-font-smoothing:antialiased;
+}
+#stars{position:fixed; inset:0; width:100%; height:100%; z-index:0; pointer-events:none}
+main, footer{position:relative; z-index:1}
+.wrap{max-width:1120px; margin:0 auto}
+h1,h2,h3{text-wrap:balance}
+a{color:var(--ink)}
+:focus-visible{outline:3px solid var(--earth); outline-offset:3px; border-radius:6px}
+.kicker{font:600 .7rem/1.3 var(--f-mono); letter-spacing:.1em; text-transform:uppercase; color:var(--sun); margin:0 0 .7em}
+.section-title{font:700 clamp(1.6rem, 4.4vw, 2.8rem)/1.1 var(--f-display); letter-spacing:-.01em; margin:0 0 .45em}
+mark{background:var(--sun); color:var(--on-sun); padding:0 .12em; border-radius:.12em; -webkit-box-decoration-break:clone; box-decoration-break:clone}
+
+/* ---------- Hero ---------- */
+.hero{padding-block:clamp(40px, 9vh, 104px) clamp(40px, 7vh, 80px)}
+.sticker{display:inline-block; margin:0; font:600 .72rem/1 var(--f-mono); letter-spacing:.06em; text-transform:uppercase; background:var(--sun); color:var(--on-sun); padding:.6em .85em; border-radius:6px; transform:rotate(-2deg)}
+.hero h1{font:800 clamp(2.05rem, 6.4vw, 4.5rem)/1.04 var(--f-display); letter-spacing:-.025em; margin:.55em 0 .45em; max-width:15ch}
+.lede{max-width:36rem; margin:0; color:var(--ink-soft); font-size:clamp(1.05rem, 2.1vw, 1.25rem)}
+.strip{margin:36px 0 0; max-width:900px}
+.strip-cap{font:600 .68rem/1.3 var(--f-mono); letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:10px}
+.strip svg{display:block; width:100%; height:auto; overflow:visible}
+.strip-labels{display:flex; justify-content:space-between; gap:8px; margin-top:8px; font:600 .78rem/1.2 var(--f-mono); color:var(--ink-soft); font-variant-numeric:tabular-nums}
+.strip-labels span:nth-child(2){color:var(--sun)}
+.cta{display:flex; flex-wrap:wrap; gap:12px; margin-top:32px}
+.btn{display:inline-flex; align-items:center; font:700 .95rem/1 var(--f-body); padding:.95em 1.25em; border-radius:999px; text-decoration:none; border:2px solid var(--sun); color:var(--ink); transition:transform .2s, background .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn.primary{background:var(--sun); color:var(--on-sun)}
+
+/* ---------- Palco à escala ---------- */
+.scale{position:relative; height:640vh}
+.stage{
+  position:sticky; top:env(safe-area-inset-top, 0px);
+  height:100vh; height:calc(100svh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+  max-width:1180px; margin:0 auto;
+  display:grid; grid-template-rows:auto minmax(0,1fr) auto; gap:10px;
+  padding-block:20px 14px;
+}
+.stage-copy{display:grid}
+.step{grid-area:1/1; max-width:40rem; opacity:0; visibility:hidden; transform:translateY(12px); transition:opacity .35s ease, transform .35s ease, visibility .35s}
+.step.is-active{opacity:1; visibility:visible; transform:none}
+.step h2{font:700 clamp(1.3rem, 3.4vw, 2.3rem)/1.12 var(--f-display); letter-spacing:-.01em; margin:0 0 .4em}
+.step .t{margin:0; color:var(--ink-soft); max-width:36rem; font-size:clamp(.98rem, 1.8vw, 1.1rem)}
+.stage-fig{position:relative; min-height:140px}
+.stage-fig svg{position:absolute; inset:0; width:100%; height:100%; overflow:hidden}
+.scalechip{position:absolute; top:0; right:0; font:600 .64rem/1 var(--f-mono); color:var(--ink-faint); letter-spacing:.04em; opacity:0; transition:opacity .3s}
+.scalechip.show{opacity:1}
+.ghost{fill:none; stroke:var(--earth); stroke-width:1; stroke-dasharray:2 2}
+.pl-base{stroke:var(--space); stroke-width:1.5}
+.ring{fill:none; stroke:var(--ring); stroke-width:1.5; opacity:.7}
+.body{stroke:var(--space); stroke-width:1}
+.dim line{stroke:var(--ink-soft); stroke-width:1.2}
+.dim text{fill:var(--ink-soft); font:600 11px var(--f-mono)}
+.dim.good line{stroke:var(--mint)} .dim.good text{fill:var(--mint)}
+.dim.bad line{stroke:var(--coral)} .dim.bad text{fill:var(--coral)}
+.stage-foot{display:grid; gap:10px}
+.foot-row{display:flex; align-items:flex-end; justify-content:space-between; gap:12px}
+.ro{display:flex; flex-wrap:wrap; align-items:baseline; gap:2px 12px; margin:0; min-width:0}
+.ro-label{flex-basis:100%; font:600 .66rem/1.3 var(--f-mono); letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint)}
+.ro-value{font:700 clamp(1.15rem, 3vw, 1.7rem)/1.1 var(--f-display); font-variant-numeric:tabular-nums}
+.ro-value.good{color:var(--mint)} .ro-value.bad{color:var(--coral)}
+.ro-sub{color:var(--ink-soft); font-size:.88rem}
+.dots{display:flex; gap:5px; flex:none; padding-bottom:6px}
+.dots span{width:18px; height:4px; border-radius:2px; background:var(--line-strong); transition:background .3s}
+.dots span.on{background:var(--sun)}
+.legend{display:flex; gap:6px; overflow-x:auto; padding:0 0 2px; margin:0; list-style:none; scrollbar-width:none}
+.legend::-webkit-scrollbar{display:none}
+.legend li{flex:none; display:flex; align-items:center; gap:6px; font:500 .78rem/1 var(--f-body); padding:.5em .75em; border-radius:999px; border:1px solid var(--line); color:var(--ink-faint); transition:color .3s, background .3s, border-color .3s}
+.legend li.on{color:var(--ink); background:var(--space-raised); border-color:var(--line-strong)}
+.legend .dot{width:10px; height:10px; border-radius:50%; background:var(--c); opacity:.45; transition:opacity .3s}
+.legend li.on .dot{opacity:1}
+
+/* ---------- Comparador ---------- */
+.explore{padding-block:80px 40px}
+.intro{max-width:38rem; color:var(--ink-soft); margin:0 0 28px}
+.panel{position:relative; background:var(--space-raised); border:1px solid var(--line); border-radius:20px; padding:clamp(16px, 3vw, 28px); max-width:880px}
+.controls{display:flex; flex-wrap:wrap; gap:16px 28px; margin-bottom:28px}
+.ctl{display:grid; gap:8px; min-width:0}
+.ctl-label{font:600 .66rem/1.3 var(--f-mono); letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint)}
+.seg{display:inline-flex; flex-wrap:wrap; gap:3px; background:var(--space-deep); border-radius:16px; padding:4px}
+.seg button{font:600 .88rem/1.1 var(--f-body); color:var(--ink-soft); background:transparent; border:0; padding:.6em .95em; border-radius:12px; cursor:pointer; text-align:left; transition:background .2s, color .2s}
+.seg button:hover{color:var(--ink)}
+.seg button[aria-checked="true"]{background:var(--sun); color:var(--on-sun)}
+.seg small{display:block; margin-top:4px; font:500 .62rem/1 var(--f-mono); opacity:.8; font-variant-numeric:tabular-nums}
+.cmp{display:grid; gap:18px}
+.cmp-row{display:grid; gap:8px}
+.cmp-name{display:flex; flex-wrap:wrap; justify-content:space-between; gap:4px 12px; font-size:.92rem; color:var(--ink-soft)}
+.cmp-name b{font:600 .82rem/1.4 var(--f-mono); color:var(--ink); font-variant-numeric:tabular-nums}
+.cmp-track{position:relative; height:30px}
+.cmp-bar{position:absolute; left:0; top:0; bottom:0; border-radius:4px; transition:width .5s ease}
+.cmp-bar.avail{border:2px dashed var(--ink-soft); background:var(--space-deep)}
+.cmp-planets{position:absolute; left:0; top:0; bottom:0; display:flex; gap:2px}
+.cmp-planets span{display:block; height:100%; min-width:2px; cursor:default}
+.cmp-planets span:first-child{border-radius:4px 0 0 4px}
+.cmp-planets span:last-child{border-radius:0 4px 4px 0}
+.cmp-over{position:absolute; top:-4px; bottom:-4px; border:2px solid var(--coral); border-radius:4px; background:repeating-linear-gradient(45deg, var(--coral) 0 2px, transparent 2px 7px); transition:left .5s ease, width .5s ease, opacity .3s}
+.cmp-spare{position:absolute; top:6px; bottom:6px; border:2px dashed var(--mint); border-radius:4px; transition:left .5s ease, width .5s ease, opacity .3s}
+.cmp-mark{position:absolute; top:-8px; bottom:-8px; width:2px; margin-left:-1px; background:var(--ink); transition:left .5s ease}
+.verdict{display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 12px; font:700 clamp(1.2rem, 3vw, 1.6rem)/1.2 var(--f-display); margin:26px 0 8px}
+.verdict .pill{font:700 .78rem/1 var(--f-mono); padding:.45em .7em; border-radius:999px; text-transform:uppercase; letter-spacing:.05em}
+.verdict.good{color:var(--mint)} .verdict.good .pill{background:var(--mint); color:var(--on-sun)}
+.verdict.bad{color:var(--coral)} .verdict.bad .pill{background:var(--coral); color:var(--on-sun)}
+.note{margin:0; color:var(--ink-soft); max-width:40rem}
+.tip{position:absolute; z-index:5; pointer-events:none; background:var(--space-deep); border:1px solid var(--line-strong); border-radius:10px; padding:8px 10px; font:500 .8rem/1.35 var(--f-body); color:var(--ink); white-space:nowrap; transform:translate(-50%, calc(-100% - 10px))}
+.tip b{font-family:var(--f-mono); font-weight:600; font-size:.74rem}
+
+/* ---------- Viagem ---------- */
+.journey{padding-top:64px}
+.journey-intro{max-width:44rem; margin:0 auto 44px}
+.journey-intro p{margin:0 0 .9em; color:var(--ink-soft)}
+.journey-intro strong{color:var(--ink); font-variant-numeric:tabular-nums}
+.track-wrap{position:relative; max-width:900px; margin:0 auto}
+#earthCv{display:block; margin:0 auto; border-radius:50%; background:radial-gradient(circle at 35% 30%, var(--earth), var(--earth-deep) 70%); box-shadow:0 0 70px rgba(79,179,255,.35)}
+#moonCv{display:block; margin:0 auto; border-radius:50%; background:radial-gradient(circle at 35% 30%, var(--moon), var(--moon-deep) 75%); box-shadow:0 0 40px rgba(218,214,204,.18)}
+.track{position:relative}
+.tick{position:absolute; left:0; width:12px; border-top:1px solid var(--ink-faint)}
+.tick span{position:absolute; left:16px; top:-.7em; font:600 .62rem/1.2 var(--f-mono); color:var(--ink-faint); white-space:nowrap; font-variant-numeric:tabular-nums}
+.band{position:absolute; left:0; right:0; background:var(--belt); border-top:1px solid rgba(255,208,58,.18); border-bottom:1px solid rgba(255,208,58,.18)}
+.band span{position:absolute; left:30px; top:10px; writing-mode:vertical-rl; font:600 .58rem/1 var(--f-mono); letter-spacing:.06em; text-transform:uppercase; color:var(--sun); opacity:.8; white-space:nowrap}
+.ms-line{position:absolute; left:44px; right:0; border-top:1px dashed var(--line-strong)}
+.ms-card{position:absolute; right:0; width:min(340px, calc(100% - 56px)); background:var(--space-raised); border:1px solid var(--line); border-radius:14px; padding:14px 16px}
+.ms-card::before{content:""; position:absolute; left:22px; bottom:100%; height:var(--lift, 12px); border-left:1px dashed var(--ink-faint)}
+.ms-card.zoom::before{display:none}
+.ms-card .tag{margin:0; font:600 .66rem/1.3 var(--f-mono); color:var(--sun); letter-spacing:.04em; font-variant-numeric:tabular-nums}
+.ms-card h3{font:700 .98rem/1.25 var(--f-display); margin:.4em 0 .35em}
+.ms-card p{margin:0; font-size:.93rem; color:var(--ink-soft)}
+.ms-card p b{color:var(--ink); font-variant-numeric:tabular-nums}
+.zoom-fig{display:block; width:100%; height:auto; margin:6px 0 10px}
+.zoom-fig text{font:600 11px var(--f-mono); fill:var(--ink-soft)}
+.zoom-fig .lv{stroke:var(--sun); stroke-dasharray:3 3; stroke-width:1}
+.zoom-fig .lv2{stroke:var(--earth); stroke-dasharray:3 3; stroke-width:1}
+
+/* ---------- Painel fixo ---------- */
+.hud{position:fixed; left:0; right:0; bottom:0; z-index:20; padding:0 max(12px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px)); transform:translateY(115%); transition:transform .35s ease; pointer-events:none}
+.hud.show{transform:none}
+.hud-in{pointer-events:auto; max-width:760px; margin:0 auto; background:var(--glass); -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px); border:1px solid var(--line-strong); border-radius:18px; padding:12px 14px; display:grid; gap:9px}
+.hud-top{display:flex; align-items:center; justify-content:space-between; gap:10px}
+.hud-km{font:700 clamp(1.2rem, 4.6vw, 1.8rem)/1 var(--f-display); font-variant-numeric:tabular-nums; white-space:nowrap}
+.hud-km small{font:600 .7rem/1 var(--f-mono); color:var(--sun); margin-left:8px; vertical-align:middle}
+.hud-go{flex:none; font:700 .8rem/1 var(--f-body); color:var(--on-sun); background:var(--sun); border:0; border-radius:999px; padding:.7em 1em; cursor:pointer}
+.hud-bar{height:6px; background:var(--space-deep); border-radius:3px; overflow:hidden}
+.hud-bar i{display:block; height:100%; width:0; background:linear-gradient(90deg, var(--earth), var(--moon))}
+.hud-stats{display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:8px; margin:0}
+.hud-stats div{min-width:0}
+.hud-stats dt{font:600 .56rem/1.3 var(--f-mono); letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint)}
+.hud-stats dd{margin:2px 0 0; font:600 .9rem/1.2 var(--f-body); font-variant-numeric:tabular-nums; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.reticle{position:fixed; left:0; right:0; top:50%; z-index:15; border-top:1px dashed rgba(255,208,58,.6); opacity:0; transition:opacity .3s; pointer-events:none}
+.reticle.show{opacity:1}
+.reticle span{position:absolute; left:max(12px, env(safe-area-inset-left, 0px)); top:-10px; background:var(--sun); color:var(--on-sun); font:600 .6rem/1 var(--f-mono); padding:5px 8px; border-radius:999px; letter-spacing:.04em}
+
+/* ---------- Chegada ---------- */
+.arrival{padding-block:56px 72px}
+.arrival .wrap{max-width:780px}
+.arrival .lead{color:var(--ink-soft); margin:0; max-width:40rem}
+.tiles-title{font:600 .68rem/1.3 var(--f-mono); letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint); margin:40px 0 12px}
+.tiles{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:12px}
+.tile{background:var(--space-raised); border:1px solid var(--line); border-radius:16px; padding:16px 18px; display:grid; gap:6px; align-content:start; min-width:0}
+.tile .lbl{font:600 .64rem/1.3 var(--f-mono); letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint)}
+.tile .val{font:800 clamp(1.45rem, 5vw, 2.2rem)/1.05 var(--f-display); font-variant-numeric:tabular-nums}
+.tile .sub{font-size:.88rem; color:var(--ink-soft)}
+.tile.feature{grid-column:1 / -1; background:var(--sun); border-color:transparent; color:var(--on-sun)}
+.tile.feature .lbl, .tile.feature .sub{color:var(--on-sun)}
+.tile.feature .val{font-size:clamp(2.6rem, 10vw, 4.4rem)}
+.drift{display:grid; grid-template-columns:auto minmax(0,1fr); gap:12px 24px; align-items:center; margin-top:44px; padding-top:28px; border-top:1px solid var(--line)}
+.drift .big{font:800 clamp(1.9rem, 6.5vw, 3.2rem)/1 var(--f-display); color:var(--sun); white-space:nowrap}
+.drift .big small{display:block; font:600 .68rem/1.4 var(--f-mono); letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint); margin-top:6px}
+.drift p{margin:0; color:var(--ink-soft)}
+@media (max-width:520px){ .drift{grid-template-columns:1fr} }
+
+footer{border-top:1px solid var(--line); padding-block:32px 56px; color:var(--ink-faint); font-size:.86rem}
+footer .wrap{max-width:780px}
+footer h2{font:600 .7rem/1.3 var(--f-mono); letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); margin:0 0 12px}
+footer p{margin:0 0 .8em}
+footer a{color:var(--ink-soft)}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *, *::before{transition:none !important; animation:none !important}
+}
+</style>
+
+<canvas id="stars" aria-hidden="true"></canvas>
+
+<main>
+  <header class="hero wrap">
+    <p class="sticker">384.400 km · distância média</p>
+    <h1>A Lua está <mark>muito mais longe</mark> do que pensas.</h1>
+    <p class="lede">Entre a Terra e a Lua cabem, à justa, os outros sete planetas do Sistema Solar. Desce pela página: primeiro vês tudo à escala, depois fazes a viagem inteira, píxel a píxel.</p>
+    <figure class="strip">
+      <figcaption class="strip-cap">A Terra e a Lua, à escala real</figcaption>
+      <svg viewBox="0 0 1000 40" role="img" aria-label="A Terra à esquerda e a Lua à direita, desenhadas à escala, separadas por 384.400 quilómetros">
+        <defs>
+          <radialGradient id="hEarth" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#9FDCFF"/><stop offset=".5" stop-color="#3D93EA"/><stop offset="1" stop-color="#173F99"/></radialGradient>
+          <radialGradient id="hMoon" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#F4F1EA"/><stop offset="1" stop-color="#9C978D"/></radialGradient>
+        </defs>
+        <line x1="36" y1="20" x2="988" y2="20" stroke="#FFD03A" stroke-width="1.5" stroke-dasharray="4 5" opacity=".7"/>
+        <circle cx="16.23" cy="20" r="16.23" fill="url(#hEarth)"/>
+        <circle cx="995.57" cy="20" r="4.43" fill="url(#hMoon)"/>
+      </svg>
+      <div class="strip-labels"><span>Terra</span><span>384.400 km</span><span>Lua</span></div>
+    </figure>
+    <div class="cta">
+      <a class="btn primary" href="#escala">Ver à escala</a>
+      <a class="btn" href="#viagem">Saltar para a viagem</a>
+    </div>
+  </header>
+
+  <section class="scale" id="escala" aria-label="A distância à escala">
+    <div class="stage" id="stage">
+      <div class="stage-copy">
+        <div class="step is-active" data-step="0">
+          <p class="kicker">Nos manuais</p>
+          <h2>A Lua costuma aparecer logo ali ao lado.</h2>
+          <p class="t">É assim que quase todos os livros a desenham. Dá jeito para caber na página, mas engana. Continua a descer.</p>
+        </div>
+        <div class="step" data-step="1" aria-hidden="true">
+          <p class="kicker">À escala real</p>
+          <h2>Agora com os tamanhos e a distância certos.</h2>
+          <p class="t">A Terra encolhe para um pontinho azul e a Lua vai parar ao outro lado do ecrã, a 384.400 km, em média.</p>
+        </div>
+        <div class="step" data-step="2" aria-hidden="true">
+          <p class="kicker">Medida em Terras</p>
+          <h2>Pelo meio cabem 29 Terras e meia.</h2>
+          <p class="t">Encostadas umas às outras, da superfície da Terra à superfície da Lua.</p>
+        </div>
+        <div class="step" data-step="3" aria-hidden="true">
+          <p class="kicker">Os outros planetas</p>
+          <h2>E se lá metêssemos os outros sete planetas?</h2>
+          <p class="t">Juntos medem 380.010 km de diâmetro. Repara no último, com a Lua à distância média.</p>
+        </div>
+        <div class="step" data-step="4" aria-hidden="true">
+          <p class="kicker">Depende do dia</p>
+          <h2>Quando a Lua se afasta, cabem todos.</h2>
+          <p class="t">A órbita da Lua é uma elipse. No apogeu, o ponto mais afastado, a 405.500 km, os sete planetas cabem e ainda sobram 17.382 km.</p>
+        </div>
+      </div>
+      <div class="stage-fig" id="stageFig">
+        <svg id="stageSvg" role="img" aria-label="A Terra, a Lua e os sete planetas desenhados à mesma escala"></svg>
+        <span class="scalechip" id="scaleChip"></span>
+      </div>
+      <div class="stage-foot">
+        <div class="foot-row">
+          <p class="ro"><span class="ro-label" id="roLabel">No desenho, a Lua está a</span><span class="ro-value" id="roValue">≈ 1,5 Terras</span><span class="ro-sub" id="roSub"></span></p>
+          <div class="dots" id="dots" aria-hidden="true"><span class="on"></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <ul class="legend" id="legend" aria-label="Os sete planetas"></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="explore" id="contas">
+    <div class="wrap">
+      <p class="kicker">Faz tu as contas</p>
+      <h2 class="section-title">Cabem ou não cabem?</h2>
+      <p class="intro">Depende de onde está a Lua e de onde começas a medir. Escolhe e compara o espaço livre com os sete planetas alinhados.</p>
+      <div class="panel" id="panel">
+        <div class="controls">
+          <div class="ctl">
+            <span class="ctl-label" id="lblPos">Posição da Lua</span>
+            <div class="seg" role="radiogroup" aria-labelledby="lblPos">
+              <button type="button" role="radio" id="pos-perigee" data-pos="perigee" aria-checked="false">Perigeu<small>363.300 km</small></button>
+              <button type="button" role="radio" id="pos-mean" data-pos="mean" aria-checked="true">Média<small>384.400 km</small></button>
+              <button type="button" role="radio" id="pos-apogee" data-pos="apogee" aria-checked="false">Apogeu<small>405.500 km</small></button>
+            </div>
+          </div>
+          <div class="ctl">
+            <span class="ctl-label" id="lblMode">Medir de</span>
+            <div class="seg" role="radiogroup" aria-labelledby="lblMode">
+              <button type="button" role="radio" id="mode-cc" data-mode="cc" aria-checked="true">Centro a centro</button>
+              <button type="button" role="radio" id="mode-ss" data-mode="ss" aria-checked="false">Superfície a superfície</button>
+            </div>
+          </div>
+        </div>
+        <div class="cmp">
+          <div class="cmp-row">
+            <div class="cmp-name"><span>Espaço entre a Terra e a Lua</span><b id="availKm">384.400 km</b></div>
+            <div class="cmp-track"><div class="cmp-bar avail" id="availBar" style="width:94.8%"></div><i class="cmp-mark" id="mark1" style="left:94.8%"></i></div>
+          </div>
+          <div class="cmp-row">
+            <div class="cmp-name"><span>Os sete planetas, lado a lado</span><b>380.010 km</b></div>
+            <div class="cmp-track"><div class="cmp-planets" id="segs" style="width:93.71%"></div><div class="cmp-over" id="over" style="opacity:0"></div><div class="cmp-spare" id="spare" style="left:93.71%;width:1.08%"></div><i class="cmp-mark" id="mark2" style="left:94.8%"></i></div>
+          </div>
+        </div>
+        <p class="verdict good" id="verdict"><span class="pill">Cabem</span><span>Sobram 4.390 km</span></p>
+        <p class="note" id="note">É esta a conta que circula na internet: do centro da Terra ao centro da Lua. Só que os planetas não podem ficar enfiados dentro da Terra nem da Lua.</p>
+        <div class="tip" id="tip" hidden></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="journey" id="viagem">
+    <div class="journey-intro">
+      <p class="kicker">A viagem</p>
+      <h2 class="section-title">Agora desce até à Lua.</h2>
+      <p>Daqui para baixo, a Terra, a Lua e a distância entre elas estão à mesma escala. No teu ecrã, <strong>1 píxel = <span id="kmpx">45</span> km</strong>, e cada ecrã que desces são cerca de <strong><span id="kmScreen">30.000</span> km</strong>.</p>
+      <p>O painel em baixo vai contando o caminho. «Planeta aqui» diz-te em que planeta estarias se os sete estivessem alinhados a partir da Terra. «De carro» conta a 100 km/h, sem paragens. A régua à esquerda marca cada Terra de distância.</p>
+    </div>
+    <div class="track-wrap" id="trackWrap">
+      <canvas id="earthCv" role="img" aria-label="A Terra"></canvas>
+      <div class="track" id="track"></div>
+      <canvas id="moonCv" role="img" aria-label="A Lua"></canvas>
+    </div>
+  </section>
+
+  <section class="arrival" id="chegada">
+    <div class="wrap">
+      <p class="kicker">Chegada</p>
+      <h2 class="section-title">Chegaste à Lua.</h2>
+      <p class="lead">Desceste 376.292 km, da superfície da Terra à superfície da Lua. Os 384.400 km que se costumam citar medem-se de centro a centro e são uma média: a Lua anda entre 363.300 e 405.500 km de nós.</p>
+      <p class="tiles-title">Quanto se demora a fazer 384.400 km</p>
+      <div class="tiles">
+        <div class="tile feature"><span class="lbl">À velocidade da luz</span><span class="val">1,28 s</span><span class="sub">A luz do Sol que bate na Lua demora pouco mais de um segundo a chegar aos teus olhos.</span></div>
+        <div class="tile"><span class="lbl">Apollo 11 · 1969</span><span class="val">≈ 76 h</span><span class="sub">Da descolagem até entrar em órbita da Lua. Pouco mais de 3 dias.</span></div>
+        <div class="tile"><span class="lbl">Avião a 900 km/h</span><span class="val">17,8 dias</span><span class="sub">Sem escalas e sem parar.</span></div>
+        <div class="tile"><span class="lbl">Carro a 100 km/h</span><span class="val">160 dias</span><span class="sub">Sempre a direito, dia e noite.</span></div>
+        <div class="tile"><span class="lbl">A pé, a 5 km/h</span><span class="val">8,8 anos</span><span class="sub">Sem parar para comer nem dormir.</span></div>
+      </div>
+      <div class="drift">
+        <div class="big">3,8 cm<small>por ano</small></div>
+        <p>A Lua está a afastar-se. Sabemos isto porque disparamos lasers contra espelhos que as missões Apollo deixaram na superfície e cronometramos o regresso da luz. Daqui a um milhão de anos estará cerca de 38 km mais longe.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <h2>Sobre os números</h2>
+    <p>Diâmetros médios dos planetas: Mercúrio 4.879 km, Vénus 12.104, Marte 6.779, Júpiter 139.820, Saturno 116.460, Urano 50.724 e Neptuno 49.244. Soma: 380.010 km. Raio médio da Terra 6.371 km, da Lua 1.737,4 km.</p>
+    <p>Distância Terra–Lua de centro a centro: 384.400 km em média, 363.300 km no perigeu e 405.500 km no apogeu (valores médios). Os limites das cinturas de Van Allen são aproximados e variam com a atividade solar; a altitude da Estação Espacial Internacional anda pelos 420 km e é ajustada de tempos a tempos. A escala da viagem é calculada para a largura do teu ecrã.</p>
+    <p>Fontes: <a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html" target="_blank" rel="noopener">NASA, Moon Fact Sheet</a> · <a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/" target="_blank" rel="noopener">NASA, Planetary Fact Sheet</a></p>
+  </div>
+</footer>
+
+<div class="hud" id="hud" inert>
+  <div class="hud-in">
+    <div class="hud-top">
+      <div class="hud-km"><span id="hKm">0</span> km<small id="hPct">0%</small></div>
+      <button type="button" class="hud-go" id="goMoon">Ir à Lua ↓</button>
+    </div>
+    <div class="hud-bar"><i id="hBar"></i></div>
+    <dl class="hud-stats">
+      <div><dt>Luz</dt><dd id="hLight">0 s</dd></div>
+      <div><dt>De carro</dt><dd id="hCar">0 h</dd></div>
+      <div><dt>Terras</dt><dd id="hEarths">0</dd></div>
+      <div><dt>Planeta aqui</dt><dd id="hPlanet">Mercúrio</dd></div>
+    </dl>
+  </div>
+</div>
+<div class="reticle" id="reticle" aria-hidden="true"><span>tu estás aqui</span></div>
+
+<script>
+(() => {
+"use strict";
+const $ = s => document.querySelector(s);
+const NS = "http://www.w3.org/2000/svg";
+
+/* ---------- Modelo (km) ---------- */
+const KM = { earthD:12742, earthR:6371, moonD:3474.8, moonR:1737.4, mean:384400, perigee:363300, apogee:405500, c:299792.458 };
+const PLANETS = [
+  { id:"mercurio", name:"Mercúrio", d:4879 },
+  { id:"venus",    name:"Vénus",    d:12104 },
+  { id:"marte",    name:"Marte",    d:6779 },
+  { id:"jupiter",  name:"Júpiter",  d:139820 },
+  { id:"saturno",  name:"Saturno",  d:116460 },
+  { id:"urano",    name:"Urano",    d:50724 },
+  { id:"neptuno",  name:"Neptuno",  d:49244 }
+];
+const LINEUP = PLANETS.reduce((a, p) => a + p.d, 0);           // 380.010 km
+const J = KM.mean - KM.earthR - KM.moonR;                       // 376.291,6 km, superfície a superfície
+const EARTHS_SS = J / KM.earthD;                                // 29,53
+const EDGES = []; { let c = 0; for (const p of PLANETS) { EDGES.push([c, c + p.d, p.name]); c += p.d; } }
+
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+const lerp = (a, b, t) => a + (b - a) * t;
+const seg = (p, a, b) => clamp((p - a) / (b - a), 0, 1);
+const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+const smooth = (e0, e1, x) => { const t = clamp((x - e0) / (e1 - e0), 0, 1); return t * t * (3 - 2 * t); };
+function fmt(n, d = 0) {
+  const neg = n < 0;
+  let [i, f] = Math.abs(n).toFixed(d).split(".");
+  i = i.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  return (neg ? "−" : "") + i + (f ? "," + f : "");
+}
+function setText(el, v) { if (el.textContent !== v) el.textContent = v; }
+function attrs(el, o) { for (const k in o) el.setAttribute(k, o[k]); }
+function mk(tag, o, parent) { const e = document.createElementNS(NS, tag); if (o) attrs(e, o); if (parent) parent.appendChild(e); return e; }
+
+/* ---------- Céu estrelado ---------- */
+const starCv = $("#stars"), sctx = starCv.getContext("2d");
+let stars = [], sw = 0, sh = 0;
+const SPEED = [.03, .08, .18];
+function initStars() {
+  const dpr = Math.min(devicePixelRatio || 1, 2);
+  sw = innerWidth; sh = innerHeight;
+  starCv.width = Math.round(sw * dpr); starCv.height = Math.round(sh * dpr);
+  sctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  let seed = 7;
+  const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const n = Math.round(sw * sh / 1700);
+  stars = Array.from({ length: n }, () => {
+    const l = rnd(), layer = l < .6 ? 0 : l < .9 ? 1 : 2;
+    return { x: rnd() * sw, y: rnd(), layer, r: [.8, 1.1, 1.6][layer], a: .3 + rnd() * .6, warm: rnd() < .12 };
+  });
+}
+function drawStars() {
+  sctx.clearRect(0, 0, sw, sh);
+  const y0 = reduced ? 0 : scrollY;
+  for (const s of stars) {
+    const y = (((s.y * sh - y0 * SPEED[s.layer]) % sh) + sh) % sh;
+    sctx.globalAlpha = s.a;
+    sctx.fillStyle = s.warm ? "#FFE7A8" : "#FFFFFF";
+    sctx.fillRect(s.x, y, s.r, s.r);
+  }
+  sctx.globalAlpha = 1;
+}
+
+/* ---------- Palco à escala ---------- */
+const stageSec = $("#escala"), stageEl = $("#stage"), fig = $("#stageFig"), svg = $("#stageSvg");
+const stepsEls = [...document.querySelectorAll(".step")], dots = [...$("#dots").children];
+const roLabel = $("#roLabel"), roValue = $("#roValue"), roSub = $("#roSub"), scaleChip = $("#scaleChip");
+const S = { ghosts: [], planets: [], chips: [] };
+let SL = null, curStep = 0;
+
+function buildStage() {
+  const defs = mk("defs", null, svg);
+  defs.innerHTML =
+    '<radialGradient id="gEarth" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#9FDCFF"/><stop offset=".5" stop-color="#3D93EA"/><stop offset="1" stop-color="#173F99"/></radialGradient>' +
+    '<radialGradient id="gMoon" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#F4F1EA"/><stop offset="1" stop-color="#9C978D"/></radialGradient>' +
+    '<radialGradient id="gShade" cx=".38" cy=".32" r=".8"><stop offset=".45" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".5"/></radialGradient>' +
+    '<linearGradient id="gJup" x1="0" y1="0" x2="0" y2="1">' +
+      '<stop offset="0" stop-color="#F2CFA8"/><stop offset=".18" stop-color="#F2CFA8"/><stop offset=".22" stop-color="#C99370"/><stop offset=".3" stop-color="#F6DDBF"/>' +
+      '<stop offset=".4" stop-color="#E7B98F"/><stop offset=".47" stop-color="#B9805C"/><stop offset=".55" stop-color="#F4D7B5"/><stop offset=".64" stop-color="#D9A57E"/>' +
+      '<stop offset=".72" stop-color="#F2CFA8"/><stop offset=".82" stop-color="#C99370"/><stop offset=".88" stop-color="#F2CFA8"/><stop offset="1" stop-color="#E5BE97"/></linearGradient>';
+  const gGhost = mk("g", null, svg), gPl = mk("g", null, svg), gBody = mk("g", null, svg), gDim = mk("g", null, svg);
+  for (let i = 0; i < 29; i++) S.ghosts.push(mk("circle", { class: "ghost", r: 0 }, gGhost));
+  for (const pl of PLANETS) {
+    const g = mk("g", { opacity: 0 }, gPl);
+    const base = mk("circle", { class: "pl-base", r: 0 }, g);
+    base.style.fill = pl.id === "jupiter" ? "url(#gJup)" : `var(--p-${pl.id})`;
+    const shade = mk("circle", { fill: "url(#gShade)", r: 0 }, g);
+    const ring = pl.id === "saturno" ? mk("ellipse", { class: "ring" }, g) : null;
+    S.planets.push({ g, base, shade, ring });
+  }
+  S.earth = mk("circle", { class: "body", fill: "url(#gEarth)" }, gBody);
+  S.moon = mk("circle", { class: "body", fill: "url(#gMoon)" }, gBody);
+  const mkDim = () => { const g = mk("g", { class: "dim", opacity: 0 }, gDim); return { g, line: mk("line", null, g), t0: mk("line", null, g), t1: mk("line", null, g), text: mk("text", null, g) }; };
+  S.dimCC = mkDim(); S.dimFit = mkDim();
+  const legend = $("#legend");
+  for (const pl of PLANETS) {
+    const li = document.createElement("li");
+    li.style.setProperty("--c", `var(--p-${pl.id})`);
+    li.innerHTML = `<i class="dot"></i>${pl.name}`;
+    legend.appendChild(li); S.chips.push(li);
+  }
+}
+
+function layoutStage() {
+  const r = fig.getBoundingClientRect();
+  const W = Math.max(1, r.width), H = Math.max(1, r.height);
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  const hz = W >= H, main = hz ? W : H, cross = hz ? H : W, pad = 12, labelRoom = 30;
+  const RANGE = KM.earthR + KM.apogee + KM.moonR;
+  const s = Math.min((main - 2 * pad) / RANGE, (cross - labelRoom - 2 * pad) / 139820);
+  const start = (main - RANGE * s) / 2;
+  const cc = (cross - labelRoom) / 2;
+  const rT = Math.min((cross - labelRoom) * .32, main * .15);
+  const tbStart = (main - rT * 4.35) / 2;
+  SL = { hz, main, cross, s, start, cc, tb: { earthC: tbStart + rT, earthR: rT, moonR: rT * .45, moonC: tbStart + rT * 3.9 } };
+  setText(scaleChip, `ESCALA · 1 px ≈ ${fmt(1 / s)} km`);
+}
+const P = (m, c) => SL.hz ? [m, c] : [c, m];
+function circ(el, m, c, r) { const [x, y] = P(m, c); attrs(el, { cx: x, cy: y, r: Math.max(0, r) }); }
+
+function setDim(D, m0, m1, cr, label, op, cls, endLabel) {
+  D.g.setAttribute("opacity", op);
+  if (op <= 0) return;
+  D.g.setAttribute("class", "dim " + (cls || ""));
+  const [x0, y0] = P(m0, cr), [x1, y1] = P(m1, cr);
+  attrs(D.line, { x1: x0, y1: y0, x2: x1, y2: y1 });
+  const a = P(m0, cr - 5), b = P(m0, cr + 5), c = P(m1, cr - 5), d = P(m1, cr + 5);
+  attrs(D.t0, { x1: a[0], y1: a[1], x2: b[0], y2: b[1] });
+  attrs(D.t1, { x1: c[0], y1: c[1], x2: d[0], y2: d[1] });
+  setText(D.text, label);
+  if (SL.hz) {
+    attrs(D.text, endLabel
+      ? { x: Math.max(x0, x1) + 4, y: cr + 19, "text-anchor": "end", transform: "" }
+      : { x: (x0 + x1) / 2, y: cr + 19, "text-anchor": "middle", transform: "" });
+  } else if (endLabel) {
+    attrs(D.text, { x: cr + 10, y: Math.max(y0, y1) + 4, "text-anchor": "start", transform: "" });
+  } else {
+    const mx = cr + 16, my = (y0 + y1) / 2;
+    attrs(D.text, { x: mx, y: my, "text-anchor": "middle", transform: `rotate(90 ${mx} ${my})` });
+  }
+}
+
+const THR = [0, .12, .28, .44, .80];
+let roCache = "";
+function drawStage(p) {
+  if (!SL) return;
+  const step = THR.reduce((acc, t, i) => p >= t ? i : acc, 0);
+  const t1 = ease(seg(p, .12, .24)), t2 = seg(p, .29, .40), tg = seg(p, .44, .48), t4 = ease(seg(p, .82, .92));
+  const d = lerp(KM.mean, KM.apogee, t4);
+  const s = SL.s, cc = SL.cc, E = SL.start + KM.earthR * s;
+
+  circ(S.earth, lerp(SL.tb.earthC, E, t1), cc, lerp(SL.tb.earthR, KM.earthR * s, t1));
+  circ(S.moon, lerp(SL.tb.moonC, E + d * s, t1), cc, Math.max(1.3, lerp(SL.tb.moonR, KM.moonR * s, t1)));
+
+  const gN = t2 * EARTHS_SS;
+  S.ghosts.forEach((g, i) => {
+    const o = t1 >= .999 ? clamp(gN - i, 0, 1) * (1 - tg) : 0;
+    g.setAttribute("opacity", o);
+    if (o > 0) circ(g, E + (KM.earthR + KM.earthD * (i + .5)) * s, cc, KM.earthR * s);
+  });
+
+  let cum = 0, filled = 0, allIn = true, nepR = 0;
+  PLANETS.forEach((pl, i) => {
+    const a = .46 + i * .045, q = ease(seg(p, a, a + .04));
+    if (q < .999) allIn = false;
+    filled += pl.d * q;
+    const r = pl.d / 2 * s, m = E + (KM.earthR + cum + pl.d / 2) * s;
+    const [x, y] = P(m, cc - (1 - q) * SL.cross * .6);
+    const o = S.planets[i];
+    o.g.setAttribute("opacity", q);
+    o.g.setAttribute("transform", `translate(${x} ${y})`);
+    o.base.setAttribute("r", r); o.shade.setAttribute("r", r);
+    if (o.ring) {
+      const R = r * 2.15;
+      attrs(o.ring, SL.hz ? { rx: R * .14, ry: R, transform: "rotate(-5)" } : { rx: R, ry: R * .14, transform: "rotate(-5)" });
+    }
+    S.chips[i].classList.toggle("on", q > .5);
+    if (pl.id === "neptuno") nepR = r;
+    cum += pl.d;
+  });
+
+  // Distância centro a centro (passos 1 e 2)
+  const ccOp = clamp((t1 - .85) / .15, 0, 1) * (1 - tg);
+  setDim(S.dimCC, E, E + d * s, cc + 14, `${fmt(d)} km · centro a centro`, ccOp, "", false);
+
+  // Folga ou excesso dos planetas (passos 3 e 4)
+  const diff = (d - KM.moonR - KM.earthR) - LINEUP;
+  const lineEnd = E + (KM.earthR + LINEUP) * s, moonNear = E + (d - KM.moonR) * s;
+  setDim(S.dimFit, Math.min(lineEnd, moonNear), Math.max(lineEnd, moonNear), cc + nepR + 10,
+    diff < 0 ? `${fmt(-diff)} km de fora` : `sobram ${fmt(diff)} km`, allIn ? 1 : 0, diff < 0 ? "bad" : "good", true);
+
+  scaleChip.classList.toggle("show", t1 > .95);
+
+  if (step !== curStep) {
+    stepsEls.forEach((el, i) => { el.classList.toggle("is-active", i === step); el.setAttribute("aria-hidden", i === step ? "false" : "true"); });
+    dots.forEach((el, i) => el.classList.toggle("on", i <= step));
+    curStep = step;
+  }
+
+  let lab, val, sub = "", cls = "";
+  if (step === 0) { lab = "No desenho, a Lua está a"; val = "≈ 1,5 Terras"; }
+  else if (step === 1) { lab = "Na realidade, está a"; val = "384.400 km"; sub = "em média, de centro a centro"; }
+  else if (step === 2) { lab = "Terras pelo meio"; val = fmt(gN, 1); sub = "de superfície a superfície"; }
+  else if (step === 3) {
+    if (allIn) { lab = "Na distância média"; val = `${fmt(-diff)} km de fora`; cls = "bad"; sub = "Neptuno não cabe todo"; }
+    else { lab = "Ocupado pelos planetas"; val = `${fmt(filled)} km`; sub = `de ${fmt(J)} km livres`; }
+  } else {
+    lab = `Lua a ${fmt(d)} km`;
+    val = diff < 0 ? `${fmt(-diff)} km de fora` : `sobram ${fmt(diff)} km`;
+    cls = diff < 0 ? "bad" : "good";
+    sub = t4 >= .999 ? "no apogeu, de superfície a superfície" : "";
+  }
+  const key = lab + val + sub + cls;
+  if (key !== roCache) {
+    roCache = key;
+    setText(roLabel, lab); setText(roValue, val); setText(roSub, sub);
+    roValue.className = "ro-value " + cls;
+  }
+}
+function updateStage() {
+  const r = stageSec.getBoundingClientRect();
+  if (r.bottom < -200 || r.top > innerHeight + 200) return;
+  const total = Math.max(1, r.height - stageEl.offsetHeight);
+  drawStage(clamp(-r.top / total, 0, 1));
+}
+
+/* ---------- Comparador ---------- */
+const EX = { pos: "mean", mode: "cc" };
+const DIST = { perigee: KM.perigee, mean: KM.mean, apogee: KM.apogee };
+const MAXKM = KM.apogee;
+const tip = $("#tip"), panel = $("#panel");
+function buildExplorer() {
+  const segs = $("#segs");
+  PLANETS.forEach(pl => {
+    const sp = document.createElement("span");
+    sp.style.flex = `${pl.d} 1 0`;
+    sp.style.background = pl.id === "jupiter" ? "linear-gradient(180deg, var(--p-jupiter) 0 30%, #D9A57E 30% 42%, var(--p-jupiter) 42% 64%, #C99370 64% 74%, var(--p-jupiter) 74%)" : `var(--p-${pl.id})`;
+    sp.setAttribute("aria-label", `${pl.name}: ${fmt(pl.d)} km`);
+    const show = e => {
+      tip.innerHTML = `${pl.name} · <b>${fmt(pl.d)} km</b> · ${fmt(pl.d / LINEUP * 100, 1)}%`;
+      tip.hidden = false;
+      const pr = panel.getBoundingClientRect(), sr = sp.getBoundingClientRect();
+      const x = e && e.clientX ? e.clientX : sr.left + sr.width / 2;
+      tip.style.left = clamp(x - pr.left, 90, pr.width - 90) + "px";
+      tip.style.top = (sr.top - pr.top) + "px";
+    };
+    sp.addEventListener("pointerenter", show);
+    sp.addEventListener("pointermove", show);
+    sp.addEventListener("pointerleave", () => { tip.hidden = true; });
+    segs.appendChild(sp);
+  });
+  document.querySelectorAll("[data-pos]").forEach(b => b.addEventListener("click", () => { EX.pos = b.dataset.pos; renderEx(); }));
+  document.querySelectorAll("[data-mode]").forEach(b => b.addEventListener("click", () => { EX.mode = b.dataset.mode; renderEx(); }));
+}
+function renderEx() {
+  document.querySelectorAll("[data-pos]").forEach(b => b.setAttribute("aria-checked", b.dataset.pos === EX.pos));
+  document.querySelectorAll("[data-mode]").forEach(b => b.setAttribute("aria-checked", b.dataset.mode === EX.mode));
+  const D = DIST[EX.pos];
+  const avail = EX.mode === "ss" ? D - KM.earthR - KM.moonR : D;
+  const diff = avail - LINEUP;
+  const pct = v => (v / MAXKM * 100).toFixed(3) + "%";
+  $("#availBar").style.width = pct(avail);
+  $("#segs").style.width = pct(LINEUP);
+  $("#mark1").style.left = pct(avail); $("#mark2").style.left = pct(avail);
+  const over = $("#over"), spare = $("#spare");
+  if (diff < 0) { over.style.left = pct(avail); over.style.width = pct(-diff); over.style.opacity = 1; spare.style.opacity = 0; }
+  else { spare.style.left = pct(LINEUP); spare.style.width = pct(diff); spare.style.opacity = 1; over.style.opacity = 0; }
+  setText($("#availKm"), `${fmt(avail)} km`);
+  const v = $("#verdict");
+  v.className = "verdict " + (diff >= 0 ? "good" : "bad");
+  v.innerHTML = diff >= 0
+    ? `<span class="pill">Cabem</span><span>Sobram ${fmt(diff)} km</span>`
+    : `<span class="pill">Não cabem</span><span>Faltam ${fmt(-diff)} km</span>`;
+  let note;
+  if (EX.pos === "perigee") note = "No perigeu, o ponto da órbita mais próximo da Terra, não há espaço para todos, meças como medires.";
+  else if (EX.pos === "apogee") note = "No apogeu, o ponto mais afastado da órbita, sobra espaço, meças como medires.";
+  else note = EX.mode === "cc"
+    ? "É esta a conta que circula na internet: do centro da Terra ao centro da Lua. Só que os planetas não podem ficar enfiados dentro da Terra nem da Lua."
+    : "Da superfície da Terra à superfície da Lua, na distância média, Neptuno fica com uma ponta de fora.";
+  setText($("#note"), note);
+}
+
+/* ---------- Planetas pintados (ruído procedural) ---------- */
+function hash3(x, y, z, s) {
+  let h = (Math.imul(x, 0x27d4eb2d) ^ Math.imul(y, 0x165667b1) ^ Math.imul(z, 0x5bd1e995) ^ Math.imul(s, 0x68e31da4)) | 0;
+  h = Math.imul(h ^ (h >>> 15), 0x2c1b3c6d);
+  h = Math.imul(h ^ (h >>> 12), 0x297a2d39);
+  h ^= h >>> 15;
+  return (h >>> 0) / 4294967295 * 2 - 1;
+}
+function vnoise(x, y, z, s) {
+  const xi = Math.floor(x), yi = Math.floor(y), zi = Math.floor(z);
+  const xf = x - xi, yf = y - yi, zf = z - zi;
+  const u = xf * xf * (3 - 2 * xf), v = yf * yf * (3 - 2 * yf), w = zf * zf * (3 - 2 * zf);
+  const a = hash3(xi, yi, zi, s), b = hash3(xi + 1, yi, zi, s), c = hash3(xi, yi + 1, zi, s), d = hash3(xi + 1, yi + 1, zi, s);
+  const e = hash3(xi, yi, zi + 1, s), f = hash3(xi + 1, yi, zi + 1, s), g = hash3(xi, yi + 1, zi + 1, s), h = hash3(xi + 1, yi + 1, zi + 1, s);
+  const x1 = a + (b - a) * u, x2 = c + (d - c) * u, x3 = e + (f - e) * u, x4 = g + (h - g) * u;
+  const y1 = x1 + (x2 - x1) * v, y2 = x3 + (x4 - x3) * v;
+  return y1 + (y2 - y1) * w;
+}
+function fbm(x, y, z, s, oct) {
+  let a = .5, f = 1, sum = 0, norm = 0;
+  for (let o = 0; o < oct; o++) { sum += a * vnoise(x * f, y * f, z * f, s + o * 17); norm += a; a *= .5; f *= 2.02; }
+  return sum / norm;
+}
+const paintJobs = new Map();
+function paintSphere(cv, css, kind) {
+  const dpr = Math.min(devicePixelRatio || 1, 2);
+  const N = Math.max(16, Math.round(Math.min(css * dpr, kind === "earth" ? 480 : 300)));
+  cv.width = N; cv.height = N; cv.style.width = css + "px"; cv.style.height = css + "px";
+  const ctx = cv.getContext("2d"), img = ctx.createImageData(N, N), D = img.data;
+  let lx = -.55, ly = -.42, lz = .72; const ll = Math.hypot(lx, ly, lz); lx /= ll; ly /= ll; lz /= ll;
+  const ROT = kind === "earth" ? .9 : 2.2, ca = Math.cos(ROT), sa = Math.sin(ROT);
+  const craters = [];
+  if (kind === "moon") {
+    let seed = 99; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+    for (let k = 0; k < 70; k++) {
+      const th = rnd() * Math.PI * 2, ph = Math.acos(2 * rnd() - 1), r = .025 + Math.pow(rnd(), 2.2) * .13;
+      craters.push({ x: Math.sin(ph) * Math.cos(th), y: Math.cos(ph), z: Math.sin(ph) * Math.sin(th), r, cos: Math.cos(r * 1.2) });
+    }
+  }
+  const job = { cancelled: false };
+  if (paintJobs.get(cv)) paintJobs.get(cv).cancelled = true;
+  paintJobs.set(cv, job);
+  let j = 0;
+  const work = () => {
+    if (job.cancelled) return;
+    const t0 = performance.now();
+    for (; j < N && performance.now() - t0 < 10; j++) {
+      const ny = (j + .5) / N * 2 - 1;
+      for (let i = 0; i < N; i++) {
+        const nx = (i + .5) / N * 2 - 1, r2 = nx * nx + ny * ny, idx = (j * N + i) * 4;
+        if (r2 > 1) { D[idx + 3] = 0; continue; }
+        const nz = Math.sqrt(1 - r2), edge = clamp((1 - Math.sqrt(r2)) * N * .5, 0, 1);
+        const wx = nx * ca + nz * sa, wz = -nx * sa + nz * ca, wy = ny;
+        const diff = Math.max(0, nx * lx + ny * ly + nz * lz);
+        let R, G, B;
+        if (kind === "earth") {
+          const h = fbm(wx * 1.7 + 3.1, wy * 1.7 + 1.3, wz * 1.7 + 7.7, 11, 5);
+          const lat = Math.abs(wy);
+          if (lat + fbm(wx * 4, wy * 4, wz * 4, 5, 2) * .12 > .86) { R = 232; G = 240; B = 250; }
+          else if (h > .09) {
+            const dry = clamp((fbm(wx * 3 + 5, wy * 3, wz * 3, 23, 3) + .25) / .5, 0, 1) * (1 - lat * .7);
+            R = lerp(58, 192, dry); G = lerp(128, 162, dry); B = lerp(66, 104, dry);
+          } else {
+            const depth = clamp((.09 - h) * 2.4, 0, 1);
+            R = lerp(44, 14, depth); G = lerp(128, 54, depth); B = lerp(212, 140, depth);
+          }
+          const cl = smooth(.1, .36, fbm(wx * 2.4 + 9, wy * 3.4 + 2, wz * 2.4 + 4, 31, 4)) * .9;
+          R = lerp(R, 250, cl); G = lerp(G, 252, cl); B = lerp(B, 255, cl);
+          const sh = .1 + .95 * diff; R *= sh; G *= sh; B *= sh;
+          const rim = Math.pow(1 - nz, 2.2) * .65 * (.3 + .7 * diff);
+          R = lerp(R, 120, rim); G = lerp(G, 190, rim); B = lerp(B, 255, rim);
+        } else {
+          const h = fbm(wx * 1.3 + 2, wy * 1.3 + 5, wz * 1.3 + 1, 41, 5);
+          let base = lerp(198, 118, smooth(-.1, -.3, h)) + fbm(wx * 7, wy * 7, wz * 7, 53, 3) * 24;
+          for (const c of craters) {
+            const dt = wx * c.x + wy * c.y + wz * c.z;
+            if (dt < c.cos) continue;
+            const t = Math.acos(Math.min(1, dt)) / c.r;
+            if (t < 1) base *= .84 + .16 * t * t;
+            base += 26 * Math.max(0, 1 - Math.abs(t - .98) / .14);
+          }
+          const sh = .08 + .97 * diff;
+          R = base * sh; G = base * .985 * sh; B = base * .95 * sh;
+        }
+        D[idx] = R; D[idx + 1] = G; D[idx + 2] = B; D[idx + 3] = 255 * edge;
+      }
+    }
+    if (j < N) setTimeout(work, 0);
+    else { ctx.putImageData(img, 0, 0); cv.style.background = "none"; }
+  };
+  setTimeout(work, 30);
+}
+
+/* ---------- Viagem à escala ---------- */
+const track = $("#track"), earthCv = $("#earthCv"), moonCv = $("#moonCv"), trackWrap = $("#trackWrap");
+const MS = [
+  { alt: 0, zoom: true },
+  { alt: 13000, tag: "13.000 a 60.000 km", title: "Cintura de Van Allen exterior", text: "Partículas carregadas presas pelo campo magnético da Terra. As missões Apollo atravessaram as cinturas depressa, para limitar a radiação." },
+  { alt: 20200, tag: "20.200 km", title: "Satélites GPS", text: "É daqui que vêm os sinais que o teu telemóvel usa para saber onde está." },
+  { alt: 35786, tag: "35.786 km", title: "Órbita geoestacionária", text: "Satélites de televisão e de meteorologia. Dão uma volta à Terra no mesmo tempo que ela roda, por isso parecem parados no céu." },
+  { alt: 100000, tag: "100.000 km", title: "Duas voltas e meia à Terra", text: "Já percorreste o mesmo que dar a volta ao equador duas vezes e meia. E ainda não fizeste um terço do caminho." },
+  { alt: J / 2, tag: `${fmt(J / 2)} km · 50%`, title: "Meio caminho", text: "Já passaste quase 15 Terras. Daqui para a frente é igual: espaço praticamente vazio." },
+  { alt: 250000, tag: "250.000 km", title: "Ainda na estrada", text: "De carro, a 100 km/h e sem parar, estarias a conduzir há 104 dias." },
+  { alt: 299792, tag: "299.792 km", title: "Um segundo-luz", text: "Um raio de luz que saia da superfície da Terra chega aqui ao fim de exatamente um segundo." },
+  { alt: 346024 - KM.earthR, tag: "≈ 346.000 km do centro da Terra", title: "Ponto de equilíbrio", text: "Aqui a Lua puxa-te com a mesma força que a Terra. A partir daqui, ganha a Lua." },
+  { alt: 362000, tag: "Quase a chegar", title: "A Terra atrás de um polegar", text: "Vista da Lua, a Terra ocupa cerca de 2 graus do céu. Neil Armstrong contou que a conseguia tapar com o polegar." }
+];
+const BANDS = [{ a: 1000, b: 6000, label: "Van Allen interior" }, { a: 13000, b: 60000, label: "Van Allen exterior" }];
+const ZOOM_SVG =
+  '<svg class="zoom-fig" viewBox="0 0 320 124" aria-hidden="true">' +
+  '<defs><linearGradient id="zAtm" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#4FB3FF" stop-opacity=".55"/><stop offset="1" stop-color="#4FB3FF" stop-opacity="0"/></linearGradient></defs>' +
+  '<rect x="0" y="80" width="320" height="34" fill="url(#zAtm)"/>' +
+  '<path d="M0 116 Q160 104 320 116 L320 124 L0 124 Z" fill="#2D7FD8"/>' +
+  '<line class="lv" x1="0" y1="95" x2="320" y2="95"/><text x="4" y="90">100 km · Linha de Kármán</text>' +
+  '<line class="lv2" x1="0" y1="34" x2="320" y2="34"/><text x="4" y="29">≈ 420 km · Estação Espacial</text>' +
+  '<g transform="translate(272 34)"><rect x="-4" y="-3" width="8" height="6" rx="1" fill="#F4F2FF"/><rect x="-20" y="-7" width="12" height="14" fill="#4FB3FF"/><rect x="8" y="-7" width="12" height="14" fill="#4FB3FF"/><line x1="-8" y1="0" x2="8" y2="0" stroke="#F4F2FF" stroke-width="1.5"/></g>' +
+  '</svg>';
+let JD = 0, KMPP = 1, lastW = 0, ticks = [], bands = [], cards = [];
+function buildJourney() {
+  for (let n = 1; n <= Math.floor(EARTHS_SS); n++) {
+    const t = document.createElement("div");
+    t.className = "tick";
+    t.innerHTML = `<span>${n === 1 ? "1 Terra" : n}</span>`;
+    track.appendChild(t); ticks.push({ el: t, n });
+  }
+  for (const b of BANDS) {
+    const el = document.createElement("div");
+    el.className = "band";
+    el.innerHTML = `<span>${b.label}</span>`;
+    track.appendChild(el); bands.push({ el, b });
+  }
+  for (const m of MS) {
+    let line = null;
+    if (!m.zoom) { line = document.createElement("div"); line.className = "ms-line"; track.appendChild(line); }
+    const card = document.createElement("div");
+    card.className = "ms-card" + (m.zoom ? " zoom" : "");
+    card.innerHTML = m.zoom
+      ? `<p class="tag">↑ À saída da Terra</p><h3>Os primeiros 500 km</h3>${ZOOM_SVG}<p>Aqui começa o espaço e passa a Estação Espacial Internacional. Nesta escala, a estação fica a <b id="issPx">9</b> píxeis da superfície. Mais acima, entre 1.000 e 6.000 km, começa a cintura de Van Allen interior.</p>`
+      : `<p class="tag">${m.tag}</p><h3>${m.title}</h3><p>${m.text}</p>`;
+    track.appendChild(card);
+    cards.push({ m, line, card });
+  }
+}
+function layoutJourney(force) {
+  if (!force && innerWidth === lastW) return;
+  lastW = innerWidth;
+  const w = trackWrap.clientWidth;
+  const nd = Math.round(Math.min(w * .8, 560));
+  const changed = nd !== JD;
+  JD = nd; KMPP = KM.earthD / JD;
+  track.style.height = (J / KMPP) + "px";
+  for (const t of ticks) t.el.style.top = (t.n * JD) + "px";
+  for (const { el, b } of bands) {
+    el.style.top = (b.a / KMPP) + "px";
+    const h = (b.b - b.a) / KMPP;
+    el.style.height = h + "px";
+    el.firstChild.style.display = h > 110 ? "" : "none";
+  }
+  let prevBottom = -Infinity;
+  for (const c of cards) {
+    const trueTop = c.m.alt / KMPP;
+    if (c.line) c.line.style.top = trueTop + "px";
+    const top = Math.max(trueTop + (c.m.zoom ? 16 : 12), prevBottom + 16);
+    c.card.style.top = top + "px";
+    c.card.style.setProperty("--lift", (top - trueTop) + "px");
+    prevBottom = top + c.card.offsetHeight;
+  }
+  setText($("#kmpx"), fmt(KMPP, 1));
+  setText($("#kmScreen"), fmt(Math.round(innerHeight * KMPP / 1000) * 1000));
+  const iss = $("#issPx"); if (iss) setText(iss, fmt(420 / KMPP, 1));
+  if (changed || force === "paint") {
+    paintSphere(earthCv, JD, "earth");
+    paintSphere(moonCv, Math.round(JD * KM.moonD / KM.earthD), "moon");
+  }
+}
+
+const hud = $("#hud"), reticle = $("#reticle"), arrival = $("#chegada");
+const H = { km: $("#hKm"), pct: $("#hPct"), bar: $("#hBar"), light: $("#hLight"), car: $("#hCar"), earths: $("#hEarths"), planet: $("#hPlanet") };
+let hudOn = false;
+function updateJourney() {
+  const tr = track.getBoundingClientRect(), ar = arrival.getBoundingClientRect();
+  const show = tr.top < innerHeight * .75 && ar.top > innerHeight * .55;
+  if (show !== hudOn) {
+    hudOn = show;
+    hud.classList.toggle("show", show); hud.inert = !show;
+    reticle.classList.toggle("show", show);
+  }
+  if (!show) return;
+  const alt = clamp((innerHeight / 2 - tr.top) * KMPP, 0, J);
+  setText(H.km, fmt(alt));
+  setText(H.pct, fmt(alt / J * 100) + "%");
+  H.bar.style.width = (alt / J * 100) + "%";
+  const sec = alt / KM.c;
+  setText(H.light, fmt(sec, 2) + " s");
+  const hrs = alt / 100;
+  setText(H.car, hrs < 48 ? fmt(hrs, hrs < 10 ? 1 : 0) + " h" : fmt(hrs / 24) + " dias");
+  setText(H.earths, fmt(alt / KM.earthD, 1));
+  const hit = EDGES.find(e => alt >= e[0] && alt < e[1]);
+  setText(H.planet, hit ? hit[2] : "Neptuno");
+}
+$("#goMoon").addEventListener("click", () => moonCv.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" }));
+
+/* ---------- Ciclo ---------- */
+let ticking = false;
+function frame() { drawStars(); updateStage(); updateJourney(); }
+addEventListener("scroll", () => {
+  if (ticking) return;
+  ticking = true;
+  requestAnimationFrame(() => { ticking = false; frame(); });
+}, { passive: true });
+let rt;
+addEventListener("resize", () => {
+  clearTimeout(rt);
+  rt = setTimeout(() => { initStars(); layoutStage(); layoutJourney(false); frame(); }, 120);
+});
+
+buildStage(); buildExplorer(); buildJourney();
+initStars(); layoutStage(); layoutJourney(true); renderEx();
+drawStage(0); frame();
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { layoutStage(); layoutJourney(true); frame(); });
+})();
+</script>
+
+</body></html>
